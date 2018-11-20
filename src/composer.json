@@ -12,5 +12,10 @@
 		"files": [
 			"includes/functions.php"
 		]
+	},
+	"scripts": {
+		"post-create-project-cmd": [
+			"skel/post_create_project.php"
+		]
 	}
 }
