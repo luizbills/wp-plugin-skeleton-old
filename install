@@ -1,0 +1,178 @@
+#!/usr/bin/env php
+<?php
+
+$values = [];
+$ready = false;
+$prompts = [
+	'Plugin Name' => '(e.g. Awesome Plugin)',
+	'Plugin Description' => '(e.g. Just another plugin)',
+	'Plugin Author' => '(e.g. Luiz Bills)',
+	'Plugin Author URL' => '(e.g. luizpb.com)',
+	'Plugin Text Domain' => '(e.g. awesome-plugin)',
+	'PHP Namespace' => '(e.g. luizbills\AwesomePlugin)',
+];
+
+// get some plugin informations
+while ( ! $ready ) {
+	foreach ( $prompts as $var => $eg ) {
+		$value = '';
+		while ( empty( $value ) ) {
+			cls();
+			$value = readline( "$var $eg: " );
+		}
+		$values[ $var ] = $value;
+	}
+
+	cls();
+
+	foreach ( $values as $key => $value ) {
+		echo "$key: $value\n\r";
+	}
+
+	// give the user a chance to fix the informations
+	$confirm = strtolower( readline( 'Is it OK? [Y/n] ' ) );
+
+	$ready = '' === $confirm || 'y' === $confirm;
+}
+
+cls();
+
+// placeholders to find and to replace
+$find = [
+	'{{namespace}}',
+	'{{composer_namespace}}',
+	'{{plugin_name}}',
+	'{{plugin_description}}',
+	'{{plugin_author}}',
+	'{{plugin_author_uri}}',
+	'{{plugin_text_domain}}'
+];
+$replace = [
+	$values['PHP Namespace'],
+	str_replace('\\', '\\\\', $values['PHP Namespace'] ) . '\\\\',
+	$values['Plugin Name'],
+	$values['Plugin Description'],
+	$values['Plugin Author'],
+	substr ( $values['Plugin Author URL'] ) === 'http' ? $values['Plugin Author URL'] : 'https://' . $values['Plugin Author URL'],
+	$values['Plugin Text Domain'],
+];
+
+
+// list of files and folders
+$files = [
+	'' => [
+		'.gitignore',
+		'composer.json',
+		'LICENSE',
+		'main.php',
+		'plugin.yml',
+	],
+	'assets/js' => [
+		'.gitkeep',
+	],
+	'assets/css' => [
+		'.gitkeep',
+	],
+	'assets/images' => [
+		'.gitkeep',
+	],
+	'classes' => [
+		'Config.php',
+		'Plugin.php',
+	],
+	'classes/Abstract' => [
+		'.gitkeep',
+	],
+	'includes' => [
+		'functions.php',
+	],
+	'languages' => [
+		'.gitkeep'
+	],
+	'templates' => [
+		'.gitkeep',
+	],
+];
+
+
+// create all files and folders
+chdir(__DIR__);
+foreach ( $files as $dir => $contents ) {
+	if ( ! empty( $dir ) ) {
+		mkdir( __DIR__ . "/$dir", 0755, true );
+	}
+
+	foreach ( $contents as $file ) {
+		$file_content = '.gitkeep' !== $file ? file_get_contents( __DIR__ . "/src/$dir/$file" ) : '';
+		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
+
+		// find and replace the placeholders
+		file_put_contents( __DIR__ . "/$dir/$file", $file_content );
+	}
+}
+
+
+// delete the installer
+unlink(__FILE__);
+
+// delete unecessary files and folders
+unlink(__DIR__ . '/README.md');
+rrmdir(__DIR__ . '/src');
+rrmdir(__DIR__ . '/.git');
+
+
+// Rename the directory
+$folder_name = slugify( $values['Plugin Name'] );
+rename( __DIR__, dirname( __DIR__ ) . "/$folder_name" );
+
+// install composer dependencies
+chdir( dirname( __DIR__ ) . "/$folder_name" );
+echo shell_exec( 'composer install' );
+
+// save the plugin folder name in a temporary file
+file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+
+
+# Helpers
+function slugify ( $text ) {
+	$sanitized_text = remove_accents( $text ); // Convert to ASCII
+	$invalid = [
+		' ' => '-',
+		'_' => '-',
+	];
+	$sanitized_text = str_replace( array_keys( $invalid ), array_values( $invalid ), $sanitized_text );
+	$sanitized_text = preg_replace( '/[^A-Za-z0-9-\. ]/', '', $sanitized_text ); // Remove all non-alphanumeric except .
+	$sanitized_text = preg_replace( '/\.(?=.*\.)/', '', $sanitized_text ); // Remove all but last .
+	$sanitized_text = preg_replace( '/-+/', '-', $sanitized_text ); // Replace any more than one - in a row
+	$sanitized_text = str_replace( '-.', '.', $sanitized_text ); // Remove last - if at the end
+	$sanitized_text = strtolower( $sanitized_text ); // Lowercase
+
+	return $sanitized_text;
+}
+
+function cls () {
+	print( "\033[2J\033[;H" );
+}
+
+function rrmdir ( $src ) {
+	$dir = opendir($src);
+	while(false !== ( $file = readdir($dir)) ) {
+		if (( $file != '.' ) && ( $file != '..' )) {
+			$full = $src . '/' . $file;
+			if ( is_dir($full) ) {
+				rrmdir($full);
+			}
+			else {
+				unlink($full);
+			}
+		}
+	}
+	closedir($dir);
+	rmdir($src);
+}
+
+function remove_accents ( $str ) {
+	$search = explode( "," , "ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ" );
+	$replace = explode( "," , "c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE" );
+	return str_replace( $search, $replace, $str );
+}

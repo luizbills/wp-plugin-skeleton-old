@@ -15,7 +15,7 @@ final class Config {
 	protected function __construct () {}
 
 	public static function setup ( $FILE ) {
-		$plugin_config = Yaml::parseFile( '../plugin.yml' );
+		$plugin_config = Yaml::parseFile( dirname( $FILE ) . '/plugin.yml' );
 
 		$plugin_name = $plugin_config['plugin_name'];
 		$plugin_slug = slugify( $plugin_name );

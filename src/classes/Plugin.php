@@ -113,8 +113,8 @@ final class Plugin {
 		_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', '1.0.0' );
 	}
 
-	public static function run ($FILE) {
-		Config::setup($FILE);
-		self::get_instance();
+	public static function run ( $FILE ) {
+		Config::setup( $FILE );
+		return self::get_instance();
 	}
 }
