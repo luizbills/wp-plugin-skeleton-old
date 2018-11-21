@@ -80,8 +80,9 @@ $files = [
 		'Config.php',
 		'Plugin.php',
 	],
-	'classes/Abstract' => [
-		'.gitkeep',
+	'classes/Utils' => [
+		'Abstract_Data_Store.php',
+		'Immutable_Data_Store.php',
 	],
 	'includes' => [
 		'functions.php',
