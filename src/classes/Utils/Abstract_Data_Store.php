@@ -1,8 +1,8 @@
 <?php
 
-namespace {{namespace}};
+namespace {{namespace}}\Utils;
 
-abstract class Data_Store {
+abstract class Abstract_Data_Store {
 	protected $data = [];
 
 	public function __construct ( $_values = [] ) {
