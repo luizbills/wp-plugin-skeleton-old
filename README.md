@@ -2,7 +2,9 @@
 
 ## Requirements
 
-- PHP v5.6+
+- [PHP](http://php.net/) v5.6+
+- [Git](https://git-scm.com/)
+- [Composer](https://getcomposer.org/)
 
 ## Install
 
