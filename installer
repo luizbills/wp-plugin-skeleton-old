@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+command -v php >/dev/null 2>&1 || { echo >&2 "PHP not installed.  Aborting."; exit 1; }
+command -v composer >/dev/null 2>&1 || { echo >&2 "Composer not installed.  Aborting."; exit 1; }
+
+git clone https://github.com/luizbills/wp-plugin-skeleton.git && cd $(basename $_ .git)
+php install
+cd ..
+cd $(cat .tmp_wp_plugin_dir)
+rm -f .tmp_wp_plugin_dir
