@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}};
+namespace {{namespace}}\Utils;
 
 use {{namespace}}\Utils\Abstract_Data_Store;
 
