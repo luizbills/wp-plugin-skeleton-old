@@ -4,7 +4,7 @@ command -v php >/dev/null 2>&1 || { echo >&2 "PHP not installed.  Aborting."; ex
 command -v composer >/dev/null 2>&1 || { echo >&2 "Composer not installed.  Aborting."; exit 1; }
 
 git clone https://github.com/luizbills/wp-plugin-skeleton.git && cd $(basename $_ .git)
-php install
+php create-plugin
 cd ..
 cd $(cat .tmp_wp_plugin_dir)
 rm -f .tmp_wp_plugin_dir
