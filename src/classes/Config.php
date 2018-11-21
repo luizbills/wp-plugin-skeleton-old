@@ -3,54 +3,35 @@
 namespace {{namespace}};
 
 use function {{namespace}}\functions\slugify;
+use {{namespace}}\Utils\Immutable_Data_Store;
 use Symfony\Component\Yaml\Yaml;
 
-final class Config {
+class Config extends Immutable_Data_Store {
 
-	const PREFIX_IMMUTABLE = 'const__';
-	const PREFIX_MUTABLE = 'var__';
+	protected static $instance = null;
 
-	protected static $data = [];
+	public function get_instance () {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
 
-	protected function __construct () {}
+	public static function initialize ( $PLUGIN_FILE ) {
+		$config = self::get_instance();
 
-	public static function setup ( $FILE ) {
-		$plugin_config = Yaml::parseFile( dirname( $FILE ) . '/plugin.yml' );
-
+		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_name = $plugin_config['plugin_name'];
 		$plugin_slug = slugify( $plugin_name );
 		$plugin_prefix = \str_replace( '-', '_', $plugin_slug ) . '_';
 
-		Config::set( 'PLUGIN_NAME', $plugin_name );
-		Config::set( 'SLUG', $plugin_slug );
-		Config::set( 'PREFIX', $plugin_prefix );
-		Config::set( 'VERSION', $plugin_config['version'] );
-		Config::set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
-		Config::set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
-		Config::set( 'FILE', $FILE );
-		Config::set( 'DIR', dirname( $FILE ) );
-	}
-
-	public static function set ( $key, $value, $immutable = true ) {
-		$prefix = $immutable ? self::PREFIX_IMMUTABLE : self::PREFIX_MUTABLE;
-		$_key = $prefix . $key;
-
-		if ( isset( self::$data[ self::PREFIX_IMMUTABLE . $key ] ) ) {
-			throw new \Error( "Config $key has already been declared" );
-		}
-		self::$data[ $_key ] = $value;
-
-		return $value;
-	}
-
-	public static function get ( $key, $default = null ) {
-		$value = $default;
-		if ( isset( self::$data[ self::PREFIX_IMMUTABLE . $key ] ) ) {
-			$value = self::$data[ self::PREFIX_IMMUTABLE . $key ];
-		}
-		if ( isset( self::$data[ self::PREFIX_MUTABLE . $key ] ) ) {
-			$value = self::$data[ self::PREFIX_MUTABLE . $key ];
-		}
-		return $value;
+		$config->set( 'PLUGIN_NAME', $plugin_name );
+		$config->set( 'SLUG', $plugin_slug );
+		$config->set( 'PREFIX', $plugin_prefix );
+		$config->set( 'VERSION', $plugin_config['version'] );
+		$config->set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
+		$config->set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
+		$config->set( 'FILE', $PLUGIN_FILE );
+		$config->set( 'DIR', dirname( $PLUGIN_FILE ) );
 	}
 }

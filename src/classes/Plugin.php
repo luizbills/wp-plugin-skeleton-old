@@ -114,7 +114,7 @@ final class Plugin {
 	}
 
 	public static function run ( $FILE ) {
-		Config::setup( $FILE );
+		Config::initialize( $FILE );
 		return self::get_instance();
 	}
 }

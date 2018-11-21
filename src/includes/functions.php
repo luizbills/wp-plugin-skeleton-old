@@ -25,6 +25,15 @@ function get_asset_url ( $file_path ) {
 	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
 }
 
+function config_set ( $key, $value ) {
+	Config::get_instance()->set( $key, $value );
+}
+
+function config_get ( $key, $default = null ) {
+	$value = Config::get_instance()->get( $key );
+	return empty( $value ) ? $default : $value;
+}
+
 function log () {
 	if ( defined( 'WP_DEBUG' ) && ! WP_DEBUG ) return;
 
