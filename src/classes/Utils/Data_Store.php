@@ -2,7 +2,7 @@
 
 namespace {{namespace}};
 
-class Data_Store {
+abstract class Data_Store {
 	protected $data = [];
 
 	public function __construct ( $_values = [] ) {
@@ -14,6 +14,8 @@ class Data_Store {
 
 		$this->init();
 	}
+	
+	protected function init () {}
 
 	public function set ( $key, $value ) {
 		$this->data[ $key ] = $value;
