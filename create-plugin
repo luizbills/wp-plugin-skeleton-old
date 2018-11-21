@@ -112,13 +112,15 @@ foreach ( $files as $dir => $contents ) {
 }
 
 
-// delete the installer
-unlink(__FILE__);
+// delete this file
+unlink( __FILE__ );
 
 // delete unecessary files and folders
-unlink(__DIR__ . '/README.md');
-rrmdir(__DIR__ . '/src');
-rrmdir(__DIR__ . '/.git');
+unlink( __DIR__ . '/README.md' );
+unlink( __DIR__ . '/LICENSE' );
+unlink( __DIR__ . '/install' );
+rrmdir( __DIR__ . '/src' );
+rrmdir( __DIR__ . '/.git' );
 
 
 // Rename the directory
