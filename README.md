@@ -7,7 +7,12 @@
 ## Install
 
 ```
-wget -qO wpps-installer https://raw.githubusercontent.com/luizbills/wp-plugin-skeleton/master/installer && bash wpps-installer && unlink wpps-installer
+git clone https://github.com/luizbills/wp-plugin-skeleton.git && cd $(basename $_ .git) \
+&& php create-plugin \
+&& sleep .5 \
+&& cd .. \
+&& cd $(cat .tmp_wp_plugin_dir) \
+&& rm -f .tmp_wp_plugin_dir
 ```
 
 ## LICENSE
