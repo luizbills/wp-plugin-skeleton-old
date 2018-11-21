@@ -2,9 +2,9 @@
 
 namespace {{namespace}};
 
-use {{namespace}}\Utils\Data_Store;
+use {{namespace}}\Utils\Abstract_Data_Store;
 
-class Immutable_Data_Store extends Data_Store {
+class Immutable_Data_Store extends Abstract_Data_Store {
 
 	public function set ( $key, $value ) {
 		if ( $this->has( $key ) ) {
@@ -12,8 +12,9 @@ class Immutable_Data_Store extends Data_Store {
 		}
 		parent::set( $key, $value );
 	}
-	
+
 	public function delete ( $key ) {
 		throw new \Exception( 'Can not delete keys' );
 	}
 }
+
