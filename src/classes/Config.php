@@ -3,54 +3,45 @@
 namespace {{namespace}};
 
 use function {{namespace}}\functions\slugify;
+use {{namespace}}\Utils\Immutable_Data_Store;
 use Symfony\Component\Yaml\Yaml;
 
-final class Config {
-
-	const PREFIX_IMMUTABLE = 'const__';
-	const PREFIX_MUTABLE = 'var__';
-
-	protected static $data = [];
-
-	protected function __construct () {}
-
-	public static function setup ( $FILE ) {
-		$plugin_config = Yaml::parseFile( dirname( $FILE ) . '/plugin.yml' );
-
+class Config extends Immutable_Data_Store {
+	
+	protected static $instance = null;
+	
+	protected function get_instance () {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+	
+	public static function initialize ( $PLUGIN_FILE ) {
+		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_name = $plugin_config['plugin_name'];
 		$plugin_slug = slugify( $plugin_name );
 		$plugin_prefix = \str_replace( '-', '_', $plugin_slug ) . '_';
 
-		Config::set( 'PLUGIN_NAME', $plugin_name );
-		Config::set( 'SLUG', $plugin_slug );
-		Config::set( 'PREFIX', $plugin_prefix );
-		Config::set( 'VERSION', $plugin_config['version'] );
-		Config::set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
-		Config::set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
-		Config::set( 'FILE', $_FILE );
-		Config::set( 'DIR', dirname( $_FILE ) );
+		self::set( 'PLUGIN_NAME', $plugin_name );
+		self::set( 'SLUG', $plugin_slug );
+		self::set( 'PREFIX', $plugin_prefix );
+		self::set( 'VERSION', $plugin_config['version'] );
+		self::set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
+		self::set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
+		self::set( 'FILE', $PLUGIN_FILE );
+		self::set( 'DIR', dirname( $PLUGIN_FILE ) );
 	}
-
-	public static function set ( $key, $value, $immutable = true ) {
-		$prefix = $immutable ? self::PREFIX_IMMUTABLE : self::PREFIX_MUTABLE;
-		$_key = $prefix . $key;
-
-		if ( isset( self::$data[ self::PREFIX_IMMUTABLE . $key ] ) ) {
-			throw new \Error( "Config $key has already been declared" );
-		}
-		self::$data[ $_key ] = $value;
-
+	
+	public static function set ( $key, $value ) {
+		self::get_instance()->set( $key, $value );
 		return $value;
 	}
-
+	
 	public static function get ( $key, $default = null ) {
-		$value = $default;
-		if ( isset( self::$data[ self::PREFIX_IMMUTABLE . $key ] ) ) {
-			$value = self::$data[ self::PREFIX_IMMUTABLE . $key ];
+		if ( self::get_instance()->has( $key ) ) {
+			return self::get_instance()->get( $key )
 		}
-		if ( isset( self::$data[ self::PREFIX_MUTABLE . $key ] ) ) {
-			$value = self::$data[ self::PREFIX_MUTABLE . $key ];
-		}
-		return $value;
+		return $default;
 	}
 }
