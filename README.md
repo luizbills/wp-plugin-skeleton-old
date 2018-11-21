@@ -15,7 +15,8 @@ git clone https://github.com/luizbills/wp-plugin-skeleton.git \
 && sleep .5 \
 && cd .. \
 && cd $(cat .tmp_wp_plugin_dir) \
-&& rm -f .tmp_wp_plugin_dir
+&& rm -f .tmp_wp_plugin_dir \
+&& ls -Apl
 ```
 
 ## LICENSE
