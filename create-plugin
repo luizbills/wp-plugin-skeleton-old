@@ -118,7 +118,6 @@ unlink( __FILE__ );
 // delete unecessary files and folders
 unlink( __DIR__ . '/README.md' );
 unlink( __DIR__ . '/LICENSE' );
-unlink( __DIR__ . '/installer' );
 rrmdir( __DIR__ . '/src' );
 rrmdir( __DIR__ . '/.git' );
 
