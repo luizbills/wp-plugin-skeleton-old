@@ -27,8 +27,8 @@ final class Config {
 		Config::set( 'VERSION', $plugin_config['version'] );
 		Config::set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
 		Config::set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
-		Config::set( 'FILE', $_FILE );
-		Config::set( 'DIR', dirname( $_FILE ) );
+		Config::set( 'FILE', $FILE );
+		Config::set( 'DIR', dirname( $FILE ) );
 	}
 
 	public static function set ( $key, $value, $immutable = true ) {
