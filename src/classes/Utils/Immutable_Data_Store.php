@@ -10,7 +10,7 @@ class Immutable_Data_Store extends Data_Store {
 		if ( $this->has( $key ) ) {
 			throw new \Exception( "key \"$key\" already assigned" );
 		}
-		$this->data[ $key ] = $value;
+		parent::set( $key, $value );
 	}
 	
 	public function delete ( $key ) {
