@@ -7,7 +7,8 @@
 ## Install
 
 ```
-git clone https://github.com/luizbills/wp-plugin-skeleton.git && cd $(basename $_ .git) \
+git clone https://github.com/luizbills/wp-plugin-skeleton.git \
+&& cd $(basename $_ .git) \
 && php create-plugin \
 && sleep .5 \
 && cd .. \
