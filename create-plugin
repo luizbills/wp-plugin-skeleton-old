@@ -57,7 +57,6 @@ $replace = [
 	$values['Plugin Text Domain'],
 ];
 
-
 // list of files and folders
 $files = [
 	'' => [
@@ -95,7 +94,6 @@ $files = [
 	],
 ];
 
-
 // create all files and folders
 chdir(__DIR__);
 foreach ( $files as $dir => $contents ) {
@@ -112,7 +110,6 @@ foreach ( $files as $dir => $contents ) {
 	}
 }
 
-
 // delete this file
 unlink( __FILE__ );
 
@@ -121,7 +118,6 @@ unlink( __DIR__ . '/README.md' );
 unlink( __DIR__ . '/LICENSE' );
 rrmdir( __DIR__ . '/src' );
 rrmdir( __DIR__ . '/.git' );
-
 
 // Rename the directory
 $folder_name = slugify( $values['Plugin Name'] );
@@ -133,7 +129,6 @@ echo shell_exec( 'composer install' );
 
 // save the plugin folder name in a temporary file
 file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
-
 
 # Helpers
 function slugify ( $text ) {
