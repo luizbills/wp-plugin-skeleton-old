@@ -26,12 +26,11 @@ function get_asset_url ( $file_path ) {
 }
 
 function config_set ( $key, $value ) {
-	Config::get_instance()->set( $key, $value );
+	return Config::get_options()->set( $key, $value );
 }
 
 function config_get ( $key, $default = null ) {
-	$value = Config::get_instance()->get( $key );
-	return empty( $value ) ? $default : $value;
+	return Config::get_options()->get( $key, $default );
 }
 
 function log () {
