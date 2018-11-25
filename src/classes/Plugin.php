@@ -7,9 +7,8 @@ use {{namespace}}\Config;
 final class Plugin {
 
 	const HAS_DEPENDENCIES = false;
-
+	
 	protected $_actived = false;
-
 	protected static $_instance = null;
 
 	public static function get_instance () {
@@ -113,8 +112,7 @@ final class Plugin {
 		_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', '1.0.0' );
 	}
 
-	public static function run ( $FILE ) {
-		Config::initialize( $FILE );
+	public static function run () {
 		return self::get_instance();
 	}
 }
