@@ -2,9 +2,7 @@
 
 namespace {{namespace}}\Utils;
 
-use {{namespace}}\Utils\Abstract_Data_Store;
-
-class Immutable_Data_Store extends Abstract_Data_Store {
+class Immutable_Data_Store extends Data_Store {
 
 	public function set ( $key, $value ) {
 		if ( $this->has( $key ) ) {
