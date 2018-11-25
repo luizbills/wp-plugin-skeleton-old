@@ -115,7 +115,7 @@ foreach ( $files as $dir => $contents ) {
 	}
 
 	foreach ( $contents as $file ) {
-		$file_content = '.gitkeep' !== $file ? file_get_contents( $target_dir . "/src/$dir/$file" ) : '';
+		$file_content = '.gitkeep' !== $file ? file_get_contents( __DIR__ . "/src/$dir/$file" ) : '';
 		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
 
 		// find and replace the placeholders
