@@ -2,36 +2,47 @@
 
 namespace {{namespace}};
 
-use function {{namespace}}\functions\slugify;
 use {{namespace}}\Utils\Immutable_Data_Store;
 use Symfony\Component\Yaml\Yaml;
+use function {{namespace}}\functions\slugify;
 
-class Config extends Immutable_Data_Store {
+class Config {
+	protected static $options = null;
 
-	protected static $instance = null;
-
-	public function get_instance () {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
+	public static function get_options () {
+		if ( is_null( self::$options ) ) {
+			self::$options = new Immutable_Data_Store();
 		}
-		return self::$instance;
+		return self::$options;
 	}
 
-	public static function initialize ( $PLUGIN_FILE ) {
-		$config = self::get_instance();
+	public static function setup ( $PLUGIN_FILE ) {
+		if ( ! is_null( self::$options ) ) return;
 
+		$options = self::get_options();
 		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_name = $plugin_config['plugin_name'];
 		$plugin_slug = slugify( $plugin_name );
 		$plugin_prefix = \str_replace( '-', '_', $plugin_slug ) . '_';
 
-		$config->set( 'PLUGIN_NAME', $plugin_name );
-		$config->set( 'SLUG', $plugin_slug );
-		$config->set( 'PREFIX', $plugin_prefix );
-		$config->set( 'VERSION', $plugin_config['version'] );
-		$config->set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
-		$config->set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
-		$config->set( 'FILE', $PLUGIN_FILE );
-		$config->set( 'DIR', dirname( $PLUGIN_FILE ) );
+		$options->set( 'PLUGIN_NAME', $plugin_name );
+		$options->set( 'SLUG', $plugin_slug );
+		$options->set( 'PREFIX', $plugin_prefix );
+		$options->set( 'VERSION', $plugin_config['version'] );
+		$options->set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
+		$options->set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
+		$options->set( 'FILE', $PLUGIN_FILE );
+		$options->set( 'DIR', dirname( $PLUGIN_FILE ) );
+	}
+
+	public static function set ( $key, $value ) {
+		return self::get_options()->set( $key, $value );
+	}
+
+	public static function get ( $key, $default = null ) {
+		if ( self::get_options()->has( $key ) ) {
+			return self::get_options()->get( $key );
+		}
+		return $default;
 	}
 }

@@ -16,5 +16,7 @@ Domain Path: /languages
 if ( ! defined( 'WPINC' ) ) die();
 
 require_once 'vendor/autoload.php';
+require_once 'includes/functions.php';
 
-{{namespace}}\Plugin::run(__FILE__);
+{{namespace}}\Config::setup( __FILE__ );
+{{namespace}}\Plugin::run();

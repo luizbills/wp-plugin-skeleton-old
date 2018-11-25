@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Utils;
 
-abstract class Abstract_Data_Store {
+class Data_Store {
 	protected $data = [];
 
 	public function __construct ( $_values = [] ) {
@@ -12,17 +12,18 @@ abstract class Abstract_Data_Store {
 			$this->set( $key, $value );
 		}
 
-		$this->init();
+		$this->after_init();
 	}
 	
-	protected function init () {}
+	protected function after_init () {}
 
 	public function set ( $key, $value ) {
 		$this->data[ $key ] = $value;
+		return $this->data[ $key ];
 	}
 
-	public function get ( $key ) {
-		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : '';
+	public function get ( $key, $default = null ) {
+		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : $default;
 	}
 
 	public function has ( $key ) {
@@ -31,7 +32,7 @@ abstract class Abstract_Data_Store {
 
 	public function delete ( $key ) {
 		if ( isset( $this->data[ $key ] ) ) {
-			unset ( $this->data[ $key ] );
+			unset( $this->data[ $key ] );
 		}
 	}
 
