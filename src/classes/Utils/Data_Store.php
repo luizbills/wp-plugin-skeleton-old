@@ -19,10 +19,11 @@ class Data_Store {
 
 	public function set ( $key, $value ) {
 		$this->data[ $key ] = $value;
+		return $this->data[ $key ];
 	}
 
-	public function get ( $key ) {
-		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : '';
+	public function get ( $key, $default = null ) {
+		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : $default;
 	}
 
 	public function has ( $key ) {
@@ -31,7 +32,7 @@ class Data_Store {
 
 	public function delete ( $key ) {
 		if ( isset( $this->data[ $key ] ) ) {
-			unset ( $this->data[ $key ] );
+			unset( $this->data[ $key ] );
 		}
 	}
 
