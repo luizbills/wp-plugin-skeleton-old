@@ -81,8 +81,11 @@ $files = [
 		'Plugin.php',
 	],
 	'classes/Utils' => [
-		'Abstract_Data_Store.php',
+		'Data_Store.php',
 		'Immutable_Data_Store.php',
+	],
+	'classes/Common' => [
+		'Abstract_Hooker.php',
 	],
 	'includes' => [
 		'functions.php',
