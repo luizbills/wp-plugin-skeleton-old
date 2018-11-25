@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Utils;
 
-abstract class Abstract_Data_Store {
+class Data_Store {
 	protected $data = [];
 
 	public function __construct ( $_values = [] ) {
@@ -12,10 +12,10 @@ abstract class Abstract_Data_Store {
 			$this->set( $key, $value );
 		}
 
-		$this->init();
+		$this->after_init();
 	}
 	
-	protected function init () {}
+	protected function after_init () {}
 
 	public function set ( $key, $value ) {
 		$this->data[ $key ] = $value;
