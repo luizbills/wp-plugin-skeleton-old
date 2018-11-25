@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$is_local = count( $argv ) > 1 && '--local' === $argv[1]; 
+$is_local = count( $argv ) > 1 && '--local' === $argv[1];
 $values = [];
 $ready = false;
 $prompts = [
@@ -97,7 +97,7 @@ $files = [
 
 // create all files and folders
 $folder_name = slugify( $values['Plugin Name'] );
-$target_dir = ! $is_local ? __DIR__ : dirname( __DIR__ ) . "/$folder_name"; 
+$target_dir = ! $is_local ? __DIR__ : dirname( __DIR__ ) . "/$folder_name";
 
 if ( $is_local ) {
 	if ( ! file_exists( $target_dir ) ) {
@@ -132,7 +132,7 @@ if ( ! $is_local ) {
 	unlink( __DIR__ . '/LICENSE' );
 	rrmdir( __DIR__ . '/src' );
 	rrmdir( __DIR__ . '/.git' );
-	
+
 	// Rename the directory
 	rename( $target_dir, dirname( __DIR__ ) . "/$folder_name" );
 	$target_dir = dirname( __DIR__ ) . "/$folder_name";
@@ -155,10 +155,9 @@ function slugify ( $text ) {
 		'_' => '-',
 	];
 	$sanitized_text = str_replace( array_keys( $invalid ), array_values( $invalid ), $sanitized_text );
-	$sanitized_text = preg_replace( '/[^A-Za-z0-9-\. ]/', '', $sanitized_text ); // Remove all non-alphanumeric except .
-	$sanitized_text = preg_replace( '/\.(?=.*\.)/', '', $sanitized_text ); // Remove all but last .
+	$sanitized_text = preg_replace( '/[^A-Za-z0-9- ]/', '', $sanitized_text ); // Remove all non-alphanumeric except .
 	$sanitized_text = preg_replace( '/-+/', '-', $sanitized_text ); // Replace any more than one - in a row
-	$sanitized_text = str_replace( '-.', '.', $sanitized_text ); // Remove last - if at the end
+	$sanitized_text = preg_replace( '/-$/', '', $sanitized_text ); // Remove last - if at the end
 	$sanitized_text = strtolower( $sanitized_text ); // Lowercase
 
 	return $sanitized_text;
