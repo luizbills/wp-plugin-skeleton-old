@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+$is_local = count( $argv ) > 1 && '--local' === $argv[1]; 
 $values = [];
 $ready = false;
 $prompts = [
@@ -95,10 +96,22 @@ $files = [
 ];
 
 // create all files and folders
-chdir(__DIR__);
+$folder_name = slugify( $values['Plugin Name'] );
+$target_dir = ! $is_local ? __DIR__ : dirname( __DIR__ ) . "/$folder_name"; 
+
+if ( $is_local ) {
+	if ( ! file_exists( $target_dir ) ) {
+		mkdir( $target_dir, 0755 );
+	} else {
+		echo "\"$target_dir\" already exists. Aborting...";
+		exit(1);
+	}
+}
+
+chdir( $target_dir );
 foreach ( $files as $dir => $contents ) {
 	if ( ! empty( $dir ) ) {
-		mkdir( __DIR__ . "/$dir", 0755, true );
+		mkdir( $target_dir . "/$dir", 0755, true );
 	}
 
 	foreach ( $contents as $file ) {
@@ -106,29 +119,33 @@ foreach ( $files as $dir => $contents ) {
 		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
 
 		// find and replace the placeholders
-		file_put_contents( __DIR__ . "/$dir/$file", $file_content );
+		file_put_contents( $target_dir . "/$dir/$file", $file_content );
 	}
 }
 
-// delete this file
-unlink( __FILE__ );
+if ( ! $is_local ) {
+	// delete this file
+	unlink( __FILE__ );
 
-// delete unecessary files and folders
-unlink( __DIR__ . '/README.md' );
-unlink( __DIR__ . '/LICENSE' );
-rrmdir( __DIR__ . '/src' );
-rrmdir( __DIR__ . '/.git' );
-
-// Rename the directory
-$folder_name = slugify( $values['Plugin Name'] );
-rename( __DIR__, dirname( __DIR__ ) . "/$folder_name" );
+	// delete unecessary files and folders
+	unlink( __DIR__ . '/README.md' );
+	unlink( __DIR__ . '/LICENSE' );
+	rrmdir( __DIR__ . '/src' );
+	rrmdir( __DIR__ . '/.git' );
+	
+	// Rename the directory
+	rename( $target_dir, dirname( __DIR__ ) . "/$folder_name" );
+	$target_dir = dirname( __DIR__ ) . "/$folder_name";
+	chdir( $target_dir );
+}
 
 // install composer dependencies
-chdir( dirname( __DIR__ ) . "/$folder_name" );
 echo shell_exec( 'composer install' );
 
-// save the plugin folder name in a temporary file
-file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+if ( ! $is_local ) {
+	// save the plugin folder name in a temporary file
+	file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+}
 
 # Helpers
 function slugify ( $text ) {
