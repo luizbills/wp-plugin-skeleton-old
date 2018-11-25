@@ -7,7 +7,7 @@ use {{namespace}}\Config;
 final class Plugin {
 
 	const HAS_DEPENDENCIES = false;
-	
+
 	protected $_actived = false;
 	protected static $_instance = null;
 
