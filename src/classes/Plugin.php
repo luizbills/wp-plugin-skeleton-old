@@ -2,8 +2,6 @@
 
 namespace {{namespace}};
 
-use {{namespace}}\Config;
-
 final class Plugin {
 
 	const HAS_DEPENDENCIES = false;
@@ -43,17 +41,11 @@ final class Plugin {
 
 		$this->_hooks();
 
-		$this->register_init_hook( [ $this, 'init' ] );
-
 		add_action( 'init', [ $this, 'do_init_hook_action' ], 0 );
 	}
 
-	public function init () {
-		// initialize other classes
-	}
-
 	protected function _hooks () {
-		//add_action( 'some_action', [ $this, 'some_method' ] );
+		require_once Config::get( 'DIR' ) . '/includes/hooks.php';
 	}
 
 	public function load_plugin_textdomain () {
