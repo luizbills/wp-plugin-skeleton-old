@@ -94,11 +94,11 @@ final class Plugin {
 		<?php
 	}
 
-	public function __clone() {
+	public function __clone () {
 		_doing_it_wrong( __FUNCTION__, 'Cloning is forbidden.', '1.0.0' );
 	}
 
-	public function __wakeup() {
+	public function __wakeup () {
 		_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', '1.0.0' );
 	}
 
