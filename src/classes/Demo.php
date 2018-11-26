@@ -2,7 +2,7 @@
 
 namespace {{namespace}};
 
-class Hooker_Demo extends Common\Abstract_Hooker {
+class Demo extends Common\Abstract_Hooker {
 
 	public function display_admin_notice () {
 		?>
