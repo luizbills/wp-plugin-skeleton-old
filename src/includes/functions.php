@@ -48,11 +48,10 @@ function user_has_role ( $role, $user_id = null ) {
 }
 
 function create_path ( $path ) {
+	$parent = dirname( $path );
 	if ( ! file_exists( $path ) ) {
-		if ( wp_is_writable( $path ) && wp_mkdir_p( $path ) ) {
-			return true;
-		} else {
-			throw new Exception( "$path is not writable" );
+		if ( ! wp_is_writable( $parent ) || ! wp_mkdir_p( $path ) ) {
+			throw new \Exception( "Can't create $path, because $parent is not writable" );
 		}
 	}
 	return false;
