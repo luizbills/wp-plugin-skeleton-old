@@ -32,6 +32,32 @@ function config_get ( $key, $default = null ) {
 	return Config::get_options()->get( $key, $default );
 }
 
+/* works with Roles and Capabilities */
+function user_has_role ( $role, $user_id = null ) {
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	$user = get_userdata( $user_id );
+
+	if ( $user ) {
+		return in_array( $role, (array) $user->roles ) || user_can( $user_id, $role );
+	}
+
+	return false;
+}
+
+function create_path ( $path ) {
+	if ( ! file_exists( $path ) ) {
+		if ( wp_is_writable( $path ) && wp_mkdir_p( $path ) ) {
+			return true;
+		} else {
+			throw new Exception( "$path is not writable" );
+		}
+	}
+	return false;
+}
+
 function _log ( $data, $type ) {
 	if ( defined( 'WP_DEBUG' ) && ! WP_DEBUG ) return;
 
