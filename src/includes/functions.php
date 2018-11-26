@@ -12,10 +12,9 @@ function slugify ( $text ) {
 		'_' => '-',
 	];
 	$sanitized_text = str_replace( array_keys( $invalid ), array_values( $invalid ), $sanitized_text );
-	$sanitized_text = preg_replace( '/[^A-Za-z0-9-\. ]/', '', $sanitized_text ); // Remove all non-alphanumeric except .
-	$sanitized_text = preg_replace( '/\.(?=.*\.)/', '', $sanitized_text ); // Remove all but last .
+	$sanitized_text = preg_replace( '/[^A-Za-z0-9- ]/', '', $sanitized_text ); // Remove all non-alphanumeric except -
 	$sanitized_text = preg_replace( '/-+/', '-', $sanitized_text ); // Replace any more than one - in a row
-	$sanitized_text = str_replace( '-.', '.', $sanitized_text ); // Remove last - if at the end
+	$sanitized_text = preg_replace( '/-$/', '', $sanitized_text ); // Remove last - if at the end
 	$sanitized_text = strtolower( $sanitized_text ); // Lowercase
 
 	return $sanitized_text;
@@ -33,19 +32,34 @@ function config_get ( $key, $default = null ) {
 	return Config::get_options()->get( $key, $default );
 }
 
-function log () {
+function _log ( $data, $type ) {
 	if ( defined( 'WP_DEBUG' ) && ! WP_DEBUG ) return;
 
+	$data = is_array( $data ) ? $data : [ $data ];
 	$message_parts = [];
 
-	foreach( func_get_args() as $arg ) {
-		if ( is_object( $arg ) || is_array( $arg ) ) {
-			$message_parts[] = print_r( $arg, true );
+	foreach( $data as $part ) {
+		if ( is_object( $arg ) || is_array( $part ) ) {
+			$message_parts[] = print_r( $part, true );
 		} else {
-			$message_parts[] = $arg;
+			$message_parts[] = $part;
 		}
 	}
 
-	$message = implode( ' ', $message_parts );
-	error_log( Config::get('FILE') . 'notice: ' . $message );
+	$type = strtoupper( $type );
+	$message = Config::get( 'FILE' ) . " $type: " . implode( ' ', $message_parts );
+	
+	error_log( $message );
+}
+
+function log_info () {
+	_log( func_get_args(), 'info' );
+}
+
+function log_debug () {
+	_log( func_get_args(), 'debug' );
+}
+
+function log_error () {
+	_log( func_get_args(), 'error' );
 }
