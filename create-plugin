@@ -156,9 +156,9 @@ echo shell_exec( 'composer install' );
 // save the plugin folder name in a temporary file
 if ( ! $is_test ) {
 	file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
-} else {
-	echo "The test plugin was created in $target_dir" . PHP_EOL;
 }
+
+echo PHP_EOL . "The plugin was successfully created in $target_dir" . PHP_EOL;
 
 # Helpers
 function slugify ( $text ) {
