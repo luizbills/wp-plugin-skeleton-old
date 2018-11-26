@@ -58,6 +58,19 @@ function create_path ( $path ) {
 	return false;
 }
 
+function log_info () {
+	_log( func_get_args(), 'info' );
+}
+
+function log_debug () {
+	_log( func_get_args(), 'debug' );
+}
+
+function log_error () {
+	_log( func_get_args(), 'error' );
+}
+
+/* note: _log is a internal function, don't use this directly */
 function _log ( $data, $type ) {
 	if ( defined( 'WP_DEBUG' ) && ! WP_DEBUG ) return;
 
@@ -82,16 +95,4 @@ function _log ( $data, $type ) {
 	$message = Config::get( 'FILE' ) . " $type: " . implode( ' ', $message_parts );
 	
 	error_log( $message );
-}
-
-function log_info () {
-	_log( func_get_args(), 'info' );
-}
-
-function log_debug () {
-	_log( func_get_args(), 'debug' );
-}
-
-function log_error () {
-	_log( func_get_args(), 'error' );
 }
