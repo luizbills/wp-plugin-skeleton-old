@@ -81,7 +81,7 @@ $files = [
 		'plugin.yml',
 	],
 	'assets/js' => [
-		'.gitkeep',
+		'demo.js',
 	],
 	'assets/css' => [
 		'.gitkeep',
@@ -97,6 +97,7 @@ $files = [
 	'classes/Utils' => [
 		'Data_Store.php',
 		'Immutable_Data_Store.php',
+		'Script_Manager.php',
 	],
 	'classes/Common' => [
 		'Abstract_Hooker.php',
