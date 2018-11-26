@@ -2,8 +2,6 @@
 
 namespace {{namespace}};
 
-use {{namespace}}\Config;
-
 final class Plugin {
 
 	const HAS_DEPENDENCIES = false;
