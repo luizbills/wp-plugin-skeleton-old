@@ -120,15 +120,20 @@ $target_dir = dirname( __DIR__ ) . "/$folder_name";
 if ( ! file_exists( $target_dir ) ) {
 	mkdir( $target_dir, 0755 );
 } else {
-	echo "\"$target_dir\" already exists. Aborting..." . PHP_EOL;
-	exit(1);
+	if ( $is_test && file_exists( "$target_dir/.wp-plugin-skeleton-test" ) ) {
+		rrmdir( $target_dir );
+		mkdir( $target_dir, 0755 );
+	} else {
+		echo "\"$target_dir\" already exists. Aborting..." . PHP_EOL;
+		exit(1);
+	}
 }
 
 chdir( $target_dir );
 
 foreach ( $files as $dir => $contents ) {
 	if ( ! empty( $dir ) ) {
-		mkdir( $target_dir . "/$dir", 0755, true );
+		mkdir( "$target_dir/$dir", 0755, true );
 	}
 
 	foreach ( $contents as $file ) {
@@ -136,8 +141,12 @@ foreach ( $files as $dir => $contents ) {
 		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
 
 		// find and replace the placeholders
-		file_put_contents( $target_dir . "/$dir/$file", $file_content );
+		file_put_contents( "$target_dir/$dir/$file", $file_content );
 	}
+}
+
+if ( $is_test ) {
+	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 }
 
 // install dependencies via composer
@@ -167,6 +176,7 @@ function cls () {
 	print( "\033[2J\033[;H" );
 }
 
+// recursive rmdir
 function rrmdir ( $src ) {
 	$dir = opendir($src);
 	while(false !== ( $file = readdir($dir)) ) {
