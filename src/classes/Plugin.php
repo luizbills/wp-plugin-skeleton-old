@@ -86,14 +86,12 @@ final class Plugin {
 	}
 
 	public function print_missing_dependencies_error () {
-		$message = esc_html__( 'Missing requirements for ', '{{plugin_text_domain}}' ) . Config::get('PLUGIN_NAME');
-		add_action( 'admin_notices', function () {
-			?>
-			<div class="notice error">
-				<?php echo $message; ?>
-			</div>
-			<?php
-		} );
+		$message = esc_html__( 'Missing requirements for ', 'mitsp-forms' ) . Config::get('PLUGIN_NAME');
+		?>
+		<div class="notice error">
+			<p><?php echo $message; ?></p>
+		</div>
+		<?php
 	}
 
 	public function __clone() {
