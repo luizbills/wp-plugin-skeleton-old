@@ -108,7 +108,7 @@ if ( $is_local ) {
 	if ( ! file_exists( $target_dir ) ) {
 		mkdir( $target_dir, 0755 );
 	} else {
-		echo "\"$target_dir\" already exists. Aborting...";
+		echo "\"$target_dir\" already exists. Aborting..." . PHP_EOL;
 		exit(1);
 	}
 }
