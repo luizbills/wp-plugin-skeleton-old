@@ -79,6 +79,7 @@ $files = [
 	'classes' => [
 		'Config.php',
 		'Plugin.php',
+		'Demo.php',
 	],
 	'classes/Utils' => [
 		'Data_Store.php',
@@ -89,6 +90,7 @@ $files = [
 	],
 	'includes' => [
 		'functions.php',
+		'hooks.php',
 	],
 	'languages' => [
 		'.gitkeep'
