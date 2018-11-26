@@ -15,6 +15,7 @@ git clone https://github.com/luizbills/wp-plugin-skeleton.git \
 && cd .. \
 && cd $(cat .tmp_wp_plugin_dir) \
 && rm -f ../.tmp_wp_plugin_dir \
+&& rm -rf ../wp-plugin-skeleton \
 && ls -Apl
 ```
 
