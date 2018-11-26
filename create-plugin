@@ -109,7 +109,7 @@ $files = [
 		'.gitkeep'
 	],
 	'templates' => [
-		'.gitkeep',
+		'admin-notice.php',
 	],
 ];
 

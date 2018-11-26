@@ -24,6 +24,10 @@ function get_asset_url ( $file_path ) {
 	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
 }
 
+function include_template_file ( $template_path, $data = [] ) {
+	require Config::get( 'DIR' ) . '/' . Config::get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+}
+
 function config_set ( $key, $value ) {
 	return Config::get_options()->set( $key, $value );
 }
@@ -92,6 +96,6 @@ function _log ( $data, $type ) {
 
 	$type = strtoupper( $type );
 	$message = Config::get( 'FILE' ) . " $type: " . implode( ' ', $message_parts );
-	
+
 	error_log( $message );
 }
