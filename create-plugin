@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
 
+$is_test = in_array( '--test', $argv );
 $values = [];
 $ready = false;
 $prompts = [
@@ -11,6 +12,19 @@ $prompts = [
 	'Plugin Text Domain' => '(e.g. awesome-plugin)',
 	'PHP Namespace' => '(e.g. luizbills\AwesomePlugin)',
 ];
+
+// auto fill if has `--test` option
+if ( $is_test ) {
+	$ready = true;
+	$values = [
+		'Plugin Name' => 'A Skeleton Test',
+		'Plugin Description' => 'Use this plugin to test the wp-plugin-skeleton base',
+		'Plugin Author' => 'An Awesome Contribuitor',
+		'Plugin Author URL' => 'https://github.com/luizbills/wp-plugin-skeleton',
+		'Plugin Text Domain' => 'a-skeleton-test',
+		'PHP Namespace' => 'Skeleton\Plugin',
+	];
+}
 
 // get some plugin informations
 while ( ! $ready ) {
@@ -131,7 +145,7 @@ chdir( $target_dir );
 echo shell_exec( 'composer install' );
 
 // save the plugin folder name in a temporary file
-file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+if ( ! $is_test ) file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
 
 # Helpers
 function slugify ( $text ) {
