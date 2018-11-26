@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-$is_local = count( $argv ) > 1 && '--local' === $argv[1];
+$is_test = in_array( '--test', $argv );
 $values = [];
 $ready = false;
 $prompts = [
@@ -12,6 +12,19 @@ $prompts = [
 	'Plugin Text Domain' => '(e.g. awesome-plugin)',
 	'PHP Namespace' => '(e.g. luizbills\AwesomePlugin)',
 ];
+
+// auto fill if has `--test` option
+if ( $is_test ) {
+	$ready = true;
+	$values = [
+		'Plugin Name' => 'A Skeleton Test',
+		'Plugin Description' => 'Use this plugin to test the wp-plugin-skeleton base',
+		'Plugin Author' => 'An Awesome Contribuitor',
+		'Plugin Author URL' => 'https://github.com/luizbills/wp-plugin-skeleton',
+		'Plugin Text Domain' => 'a-skeleton-test',
+		'PHP Namespace' => 'Skeleton\Plugin',
+	];
+}
 
 // get some plugin informations
 while ( ! $ready ) {
@@ -102,10 +115,13 @@ $files = [
 
 // create all files and folders
 $folder_name = slugify( $values['Plugin Name'] );
-$target_dir = ! $is_local ? __DIR__ : dirname( __DIR__ ) . "/$folder_name";
+$target_dir = dirname( __DIR__ ) . "/$folder_name";
 
-if ( $is_local ) {
-	if ( ! file_exists( $target_dir ) ) {
+if ( ! file_exists( $target_dir ) ) {
+	mkdir( $target_dir, 0755 );
+} else {
+	if ( $is_test && file_exists( "$target_dir/.wp-plugin-skeleton-test" ) ) {
+		rrmdir( $target_dir );
 		mkdir( $target_dir, 0755 );
 	} else {
 		echo "\"$target_dir\" already exists. Aborting..." . PHP_EOL;
@@ -114,9 +130,10 @@ if ( $is_local ) {
 }
 
 chdir( $target_dir );
+
 foreach ( $files as $dir => $contents ) {
 	if ( ! empty( $dir ) ) {
-		mkdir( $target_dir . "/$dir", 0755, true );
+		mkdir( "$target_dir/$dir", 0755, true );
 	}
 
 	foreach ( $contents as $file ) {
@@ -124,32 +141,23 @@ foreach ( $files as $dir => $contents ) {
 		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
 
 		// find and replace the placeholders
-		file_put_contents( $target_dir . "/$dir/$file", $file_content );
+		file_put_contents( "$target_dir/$dir/$file", $file_content );
 	}
 }
 
-if ( ! $is_local ) {
-	// delete this file
-	unlink( __FILE__ );
-
-	// delete unecessary files and folders
-	unlink( __DIR__ . '/README.md' );
-	unlink( __DIR__ . '/LICENSE' );
-	rrmdir( __DIR__ . '/src' );
-	rrmdir( __DIR__ . '/.git' );
-
-	// Rename the directory
-	rename( $target_dir, dirname( __DIR__ ) . "/$folder_name" );
-	$target_dir = dirname( __DIR__ ) . "/$folder_name";
-	chdir( $target_dir );
+if ( $is_test ) {
+	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 }
 
-// install composer dependencies
+// install dependencies via composer
+chdir( $target_dir );
 echo shell_exec( 'composer install' );
 
-if ( ! $is_local ) {
-	// save the plugin folder name in a temporary file
+// save the plugin folder name in a temporary file
+if ( ! $is_test ) {
 	file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+} else {
+	echo "The test plugin was created in $target_dir" . PHP_EOL;
 }
 
 # Helpers
@@ -172,6 +180,7 @@ function cls () {
 	print( "\033[2J\033[;H" );
 }
 
+// recursive rmdir
 function rrmdir ( $src ) {
 	$dir = opendir($src);
 	while(false !== ( $file = readdir($dir)) ) {
