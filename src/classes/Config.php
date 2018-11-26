@@ -21,16 +21,15 @@ class Config {
 
 		$options = self::get_options();
 		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
-		$plugin_name = $plugin_config['plugin_name'];
-		$plugin_slug = slugify( $plugin_name );
+		$plugin_slug = slugify( $plugin_config['PLUGIN_NAME'] );
 		$plugin_prefix = \str_replace( '-', '_', $plugin_slug ) . '_';
 
-		$options->set( 'PLUGIN_NAME', $plugin_name );
+		foreach ( $plugin_config as $key => $value ) {
+			$options->set( $key, $value );
+		}
+
 		$options->set( 'SLUG', $plugin_slug );
 		$options->set( 'PREFIX', $plugin_prefix );
-		$options->set( 'VERSION', $plugin_config['version'] );
-		$options->set( 'ASSETS_DIR', $plugin_config['assets_dir'] );
-		$options->set( 'TEMPLATES_DIR', $plugin_config['templates_dir'] );
 		$options->set( 'FILE', $PLUGIN_FILE );
 		$options->set( 'DIR', dirname( $PLUGIN_FILE ) );
 	}

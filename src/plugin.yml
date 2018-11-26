@@ -1,4 +1,4 @@
-version: 1.0.0
-plugin_name: {{plugin_name}}
-assets_dir: assets
-templates_dir: templates
+VERSION: 1.0.0
+PLUGIN_NAME: {{plugin_name}}
+ASSETS_DIR: assets
+TEMPLATES_DIR: templates
