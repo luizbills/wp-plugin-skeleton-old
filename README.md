@@ -4,7 +4,7 @@
 
 - [PHP](http://php.net/) v5.6+
 - [Git](https://git-scm.com/)
-- [Composer](https://getcomposer.org/)
+- [Composer](https://getcomposer.org/) (globally installed as `composer`)
 
 ## Install
 
