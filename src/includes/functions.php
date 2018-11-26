@@ -39,7 +39,13 @@ function _log ( $data, $type ) {
 	$message_parts = [];
 
 	foreach( $data as $part ) {
-		if ( is_object( $arg ) || is_array( $part ) ) {
+		if ( null === $part ) {
+			$message_parts[] = 'Null';
+		}
+		elseif ( is_bool( $part ) ) {
+			$message_parts[] = $part ? 'True' : 'False';
+		}
+		elseif ( ! is_string( $part ) ) {
 			$message_parts[] = print_r( $part, true );
 		} else {
 			$message_parts[] = $part;
