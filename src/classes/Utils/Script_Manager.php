@@ -22,7 +22,7 @@ class Script_Manager {
 			if ( $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
 
 				wp_enqueue_script(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
@@ -38,7 +38,7 @@ class Script_Manager {
 			if ( $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
 
 				wp_enqueue_style(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
@@ -56,7 +56,7 @@ class Script_Manager {
 			if ( ! $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
 
 				wp_enqueue_script(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
@@ -72,7 +72,7 @@ class Script_Manager {
 			if ( ! $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
 
 				wp_enqueue_style(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
