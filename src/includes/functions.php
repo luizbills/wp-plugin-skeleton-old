@@ -5,19 +5,26 @@ namespace {{namespace}}\functions;
 use {{namespace}}\Config;
 
 function slugify ( $text ) {
-	$sanitized_text = remove_accents( $text ); // Convert to ASCII
+	$slug = remove_accents( $text ); // Convert to ASCII
 	// Standard replacements
 	$invalid = [
 		' ' => '-',
 		'_' => '-',
 	];
-	$sanitized_text = str_replace( array_keys( $invalid ), array_values( $invalid ), $sanitized_text );
-	$sanitized_text = preg_replace( '/[^A-Za-z0-9- ]/', '', $sanitized_text ); // Remove all non-alphanumeric except -
-	$sanitized_text = preg_replace( '/-+/', '-', $sanitized_text ); // Replace any more than one - in a row
-	$sanitized_text = preg_replace( '/-$/', '', $sanitized_text ); // Remove last - if at the end
-	$sanitized_text = strtolower( $sanitized_text ); // Lowercase
+	$slug = str_replace( array_keys( $invalid ), array_values( $invalid ), $slug );
+	$slug = preg_replace( '/[^A-Za-z0-9-]/', '', $slug ); // Remove all non-alphanumeric except -
+	$slug = preg_replace( '/-+/', '-', $slug ); // Replace any more than one - in a row
+	$slug = preg_replace( '/-$/', '', $slug ); // Remove last - if at the end
+	$slug = strtolower( $slug ); // Lowercase
 
-	return $sanitized_text;
+	return $slug;
+}
+
+function snake_slugify ( $text ) {
+	$snake_case = slugify( $text );
+	$snake_case = str_replace( '-', '_', $snake_case );
+
+	return $snake_case;
 }
 
 function get_asset_url ( $file_path ) {
@@ -95,7 +102,7 @@ function _log ( $data, $type ) {
 	}
 
 	$type = strtoupper( $type );
-	$message = Config::get( 'FILE' ) . " $type: " . implode( ' ', $message_parts );
+	$message = Config::get( 'PLUGIN_NAME' ) . " $type: " . implode( ' ', $message_parts );
 
 	error_log( $message );
 }
