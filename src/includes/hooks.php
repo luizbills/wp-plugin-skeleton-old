@@ -4,6 +4,7 @@ namespace {{namespace}};
 
 use function {{namespace}}\functions\get_asset_url;
 
+// just an example
 $demo = Config::set( '$demo', new Demo() );
 $demo->add_action( 'admin_notices', 'display_admin_notice' );
 
