@@ -3,6 +3,7 @@
 namespace {{namespace}}\Utils;
 
 use {{namespace}}\Config;
+use function {{namespace}}\functions\get_asset_url;
 
 class Script_Manager {
 
@@ -17,12 +18,14 @@ class Script_Manager {
 	}
 
 	public function frontend_enqueue_scripts () {
-		foreach ( $scripts as $args ) {
+		foreach ( $this->scripts as $args ) {
 			if ( $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+
 				wp_enqueue_script(
-					$args['handle'],
+					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
 					$args['version'],
@@ -31,12 +34,14 @@ class Script_Manager {
 			}
 		}
 
-		foreach ( $styles as $args ) {
+		foreach ( $this->styles as $args ) {
 			if ( $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+
 				wp_enqueue_style(
-					$args['handle'],
+					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
 					$args['version'],
@@ -47,12 +52,14 @@ class Script_Manager {
 	}
 
 	public function admin_enqueue_scripts () {
-		foreach ( $scripts as $args ) {
+		foreach ( $this->scripts as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+
 				wp_enqueue_script(
-					$args['handle'],
+					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
 					$args['version'],
@@ -61,12 +68,14 @@ class Script_Manager {
 			}
 		}
 
-		foreach ( $styles as $args ) {
+		foreach ( $this->styles as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
 			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== strpos( $args['handle'], get_asset_url( '' ) );
+
 				wp_enqueue_style(
-					$args['handle'],
+					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
 					$args['version'],
@@ -89,7 +98,7 @@ class Script_Manager {
 	public function add_global_script_dependency ( $handle ) {
 		$this->global_script_dependencies[] = $handle;
 	}
-	
+
 	public function add_global_style_dependency ( $handle ) {
 		$this->global_script_dependencies[] = $handle;
 	}
@@ -102,13 +111,19 @@ class Script_Manager {
 		];
 		$args = array_merge( $this->$get_defaults(), $args );
 
+		if ( empty( $args['deps'] ) ) {
+			$args['deps'] = [];
+		}
+
 		if ( empty( $args['handle'] ) ) {
 			$args['handle'] = basename( $args['src'], $suffix[ $type ] );
 		}
 
 		if ( 'script' === $type ) {
+			$args['deps'] = array_merge( $args['deps'], $this->global_script_dependencies );
 			$this->scripts[] = $args;
 		} elseif ( 'style' === $type ) {
+			$args['deps'] = array_merge( $args['deps'], $this->global_style_dependencies );
 			$this->styles[] = $args;
 		}
 	}
@@ -116,6 +131,7 @@ class Script_Manager {
 	protected function get_script_defaults () {
 		$defaults = $this->get_defaults();
 		$defaults['in_footer'] = true;
+		$defaults['deps'] = [];
 		return $defaults;
 	}
 
@@ -123,17 +139,18 @@ class Script_Manager {
 	protected function get_style_defaults () {
 		$defaults = $this->get_defaults();
 		$defaults['media'] = 'all';
+		$defaults['deps'] = [];
 		return $defaults;
 	}
-	
+
 	protected function get_defaults () {
 		return [
 			'handle' => '',
 			'src' => '',
-			'deps' => $this->global_dependencies,
 			'version' => Config::get( 'VERSION' ),
 			'in_admin' => false,
-			'condition' => null
+			'condition' => null,
+			'prefix' => Config::get( 'PREFIX' ),
 		];
 	}
 }

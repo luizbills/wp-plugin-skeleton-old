@@ -1,1 +1,1 @@
-alert('Hello world from wp-plugin-skeleton');
+console.log('Hello world from wp-plugin-skeleton');
