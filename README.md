@@ -12,10 +12,9 @@
 git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 && cd $_ \
 && php create-plugin && sleep .1 \
-&& cd .. \
-&& cd $(cat .tmp_wp_plugin_dir) \
+&& cd ../$(cat ../.tmp_wp_plugin_dir) \
 && rm -f ../.tmp_wp_plugin_dir \
-&& rm -rf ../wp-plugin-skeleton \
+&& rm -rf ../_skeleton \
 && ls -Apl
 ```
 
