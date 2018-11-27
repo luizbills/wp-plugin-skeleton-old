@@ -84,7 +84,7 @@ $files = [
 		'demo.js',
 	],
 	'assets/css' => [
-		'.gitkeep',
+		'demo.css',
 	],
 	'assets/images' => [
 		'.gitkeep',
