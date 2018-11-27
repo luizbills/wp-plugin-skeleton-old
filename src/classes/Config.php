@@ -5,6 +5,7 @@ namespace {{namespace}};
 use {{namespace}}\Utils\Immutable_Data_Store;
 use Symfony\Component\Yaml\Yaml;
 use function {{namespace}}\functions\slugify;
+use function {{namespace}}\functions\snake_slugify;
 
 class Config {
 	protected static $options = null;
@@ -22,7 +23,7 @@ class Config {
 		$options = self::get_options();
 		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_slug = slugify( $plugin_config['PLUGIN_NAME'] );
-		$plugin_prefix = \str_replace( '-', '_', $plugin_slug ) . '_';
+		$plugin_prefix = snake_slugify( $plugin_slug ) . '_';
 
 		foreach ( $plugin_config as $key => $value ) {
 			$options->set( $key, $value );

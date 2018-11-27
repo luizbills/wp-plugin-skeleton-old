@@ -2,6 +2,8 @@
 
 namespace {{namespace}};
 
+use function {{namespace}}\functions\include_template_file;
+
 final class Plugin {
 
 	const HAS_DEPENDENCIES = false;
@@ -45,7 +47,8 @@ final class Plugin {
 	}
 
 	protected function _hooks () {
-		require_once Config::get( 'DIR' ) . '/includes/hooks.php';
+		$dir = Config::get( 'DIR' );
+		require_once $dir . '/includes/hooks.php';
 	}
 
 	public function load_plugin_textdomain () {

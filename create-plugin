@@ -81,10 +81,10 @@ $files = [
 		'plugin.yml',
 	],
 	'assets/js' => [
-		'.gitkeep',
+		'demo.js',
 	],
 	'assets/css' => [
-		'.gitkeep',
+		'demo.css',
 	],
 	'assets/images' => [
 		'.gitkeep',
@@ -97,6 +97,7 @@ $files = [
 	'classes/Utils' => [
 		'Data_Store.php',
 		'Immutable_Data_Store.php',
+		'Script_Manager.php',
 	],
 	'classes/Common' => [
 		'Abstract_Hooker.php',
@@ -121,8 +122,18 @@ if ( ! file_exists( $target_dir ) ) {
 	mkdir( $target_dir, 0755 );
 } else {
 	if ( $is_test && file_exists( "$target_dir/.wp-plugin-skeleton-test" ) ) {
+		$tmp_vendor = null;
+		if ( file_exists( "$target_dir/vendor" ) ) {
+			$tmp_vendor = md5( time() );
+			rename( "$target_dir/vendor", dirname( $target_dir ) . "/$tmp_vendor" );
+		}
+
 		rrmdir( $target_dir );
 		mkdir( $target_dir, 0755 );
+
+		if ( null !== $tmp_vendor ) {
+			rename( dirname( $target_dir ) . "/$tmp_vendor", "$target_dir/vendor" );
+		}
 	} else {
 		echo "\"$target_dir\" already exists. Aborting..." . PHP_EOL;
 		exit(1);
@@ -130,6 +141,10 @@ if ( ! file_exists( $target_dir ) ) {
 }
 
 chdir( $target_dir );
+
+if ( $is_test && file_exists( __DIR__ . "/src/includes/tests.php" ) ) {
+	$files['includes'][] = 'tests.php';
+}
 
 foreach ( $files as $dir => $contents ) {
 	if ( ! empty( $dir ) ) {
@@ -147,11 +162,19 @@ foreach ( $files as $dir => $contents ) {
 
 if ( $is_test ) {
 	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
+
+	if ( file_exists( __DIR__ . "/src/includes/tests.php" ) ) {
+		$file_content = file_get_contents( "$target_dir/classes/Plugin.php" );
+		$find = '\'/includes/hooks.php\';';
+		$replace = $find . PHP_EOL . "\t\trequire_once \$dir . '/includes/tests.php';";
+
+		file_put_contents( "$target_dir/classes/Plugin.php", str_replace( $find, $replace, $file_content ) );
+	}
 }
 
 // install dependencies via composer
 chdir( $target_dir );
-echo shell_exec( 'composer install' );
+echo shell_exec( 'composer update' );
 
 // save the plugin folder name in a temporary file
 if ( ! $is_test ) {
