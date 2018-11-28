@@ -102,7 +102,7 @@ function _log ( $data, $type ) {
 	}
 
 	$type = strtoupper( $type );
-	$message = Config::get( 'PLUGIN_NAME' ) . " $type: " . implode( ' ', $message_parts );
+	$message = Config::get( 'SLUG' ) . ".$type: " . implode( ' ', $message_parts );
 
 	error_log( $message );
 }
