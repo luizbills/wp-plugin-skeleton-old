@@ -142,7 +142,7 @@ if ( ! file_exists( $target_dir ) ) {
 
 chdir( $target_dir );
 
-if ( $is_test && file_exists( __DIR__ . "/src/includes/tests.php" ) ) {
+if ( $is_test && file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
 	$files['includes'][] = 'tests.php';
 }
 
@@ -163,10 +163,10 @@ foreach ( $files as $dir => $contents ) {
 if ( $is_test ) {
 	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 
-	if ( file_exists( __DIR__ . "/src/includes/tests.php" ) ) {
+	if ( file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
 		$file_content = file_get_contents( "$target_dir/classes/Plugin.php" );
 		$find = '\'/includes/hooks.php\';';
-		$replace = $find . PHP_EOL . "\t\trequire_once \$dir . '/includes/tests.php';";
+		$replace = $find . PHP_EOL . "\t\trequire_once \$dir . '/includes/dev.php';";
 
 		file_put_contents( "$target_dir/classes/Plugin.php", str_replace( $find, $replace, $file_content ) );
 	}
