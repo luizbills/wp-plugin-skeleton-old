@@ -1,7 +1,8 @@
 <?php
 
-namespace {{namespace}};
+namespace {{namespace}}\Core;
 
+use {{namespace}}\Core\Config;
 use function {{namespace}}\functions\include_template_file;
 
 final class Plugin {

@@ -90,9 +90,11 @@ $files = [
 		'.gitkeep',
 	],
 	'classes' => [
+		'Demo.php',
+	],
+	'classes/Core' => [
 		'Config.php',
 		'Plugin.php',
-		'Demo.php',
 	],
 	'classes/Utils' => [
 		'Data_Store.php',
@@ -164,7 +166,7 @@ if ( $is_test ) {
 	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 
 	if ( file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
-		$plugin_class_path = "$target_dir/classes/Plugin.php";
+		$plugin_class_path = "$target_dir/classes/Core/Plugin.php";
 		$file_content = file_get_contents( $plugin_class_path );
 		$find = '\'/includes/hooks.php\';';
 		$replace = $find . PHP_EOL . "\t\trequire_once \$dir . '/includes/dev.php';";
