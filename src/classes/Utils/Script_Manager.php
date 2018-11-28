@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Utils;
 
-use {{namespace}}\Config;
+use {{namespace}}\Core\Config;
 use function {{namespace}}\functions\get_asset_url;
 
 class Script_Manager {

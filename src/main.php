@@ -18,5 +18,5 @@ if ( ! defined( 'WPINC' ) ) die();
 require_once 'vendor/autoload.php';
 require_once 'includes/functions.php';
 
-{{namespace}}\Config::setup( __FILE__ );
-{{namespace}}\Plugin::run();
+{{namespace}}\Core\Config::setup( __FILE__ );
+{{namespace}}\Core\Plugin::run();

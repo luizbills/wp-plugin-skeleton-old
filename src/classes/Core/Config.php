@@ -1,9 +1,9 @@
 <?php
 
-namespace {{namespace}};
+namespace {{namespace}}\Core;
 
-use {{namespace}}\Utils\Immutable_Data_Store;
 use Symfony\Component\Yaml\Yaml;
+use {{namespace}}\Utils\Immutable_Data_Store;
 use function {{namespace}}\functions\slugify;
 use function {{namespace}}\functions\snake_slugify;
 

@@ -3,6 +3,7 @@
 namespace {{namespace}};
 
 use function {{namespace}}\functions\get_asset_url;
+use {{namespace}}\Core\Config;
 
 // just an example
 $demo = Config::set( '$demo', new Demo() );

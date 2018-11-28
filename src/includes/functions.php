@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\functions;
 
-use {{namespace}}\Config;
+use {{namespace}}\Core\Config;
 
 function slugify ( $text ) {
 	$slug = remove_accents( $text ); // Convert to ASCII

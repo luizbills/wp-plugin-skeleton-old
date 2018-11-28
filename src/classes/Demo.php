@@ -2,6 +2,7 @@
 
 namespace {{namespace}};
 
+use {{namespace}}\Core\Config;
 use function {{namespace}}\functions\include_template_file;
 
 class Demo extends Common\Abstract_Hooker {
