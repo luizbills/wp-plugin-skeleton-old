@@ -31,7 +31,7 @@ define( 'WP_DEBUG_LOG', true );
 ```
 
 - **Make your changes!**
-- Optional: *create a `src/includes/tests.php` to test your changes (see `src/includes/tests-sample.php`).*
+- Optional: *create a `src/includes/dev.php` to test your changes (see `src/includes/dev-sample.php`).*
 - Open your terminal and run the following commands:
 
 ```bash
