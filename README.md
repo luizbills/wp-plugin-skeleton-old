@@ -11,7 +11,7 @@
 ```
 git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 && cd $_ \
-&& php create-plugin && sleep .1 \
+&& php ./install && sleep .1 \
 && cd ../$(cat ../.tmp_wp_plugin_dir) \
 && rm -f ../.tmp_wp_plugin_dir \
 && rm -rf ../_skeleton \
@@ -36,7 +36,7 @@ define( 'WP_DEBUG_LOG', true );
 
 ```bash
 cd /path/to/your/wp-content/plugins/wp-plugin-skeleton
-php create-plugin --test
+php ./install --test
 ```
 - Then, open your WordPress admin panel and active the **`A Skeleton Test`** plugin.
 
