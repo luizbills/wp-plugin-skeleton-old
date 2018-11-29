@@ -184,7 +184,8 @@ if ( ! $is_test ) {
 	file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
 }
 
-echo PHP_EOL . "The plugin was successfully created in $target_dir" . PHP_EOL;
+cls();
+echo "The plugin was successfully created in $target_dir" . PHP_EOL . PHP_EOL;
 
 # Helpers
 function slugify ( $text ) {
