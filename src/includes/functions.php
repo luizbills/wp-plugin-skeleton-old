@@ -39,8 +39,14 @@ function get_asset_url ( $file_path ) {
 	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
 }
 
-function include_template_file ( $template_path, $data = [] ) {
-	require Config::get( 'DIR' ) . '/' . Config::get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+function get_template ( $template_path, $data = [] ) {
+	ob_start();
+	include Config::get( 'DIR' ) . '/' . Config::get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+	return ob_get_clean();
+}
+
+function include_template ( $template_path, $data = [] ) {
+	echo get_template( $template_path, $data );
 }
 
 function config_set ( $key, $value ) {
