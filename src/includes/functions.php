@@ -4,6 +4,14 @@ namespace {{namespace}}\functions;
 
 use {{namespace}}\Core\Config;
 
+function get_post ( $id, $post_type = 'post' ) {
+	$post = \get_post( $id );
+	if ( $post && $post_type === $post->post_type ) {
+		return $post;
+	}
+	return false;
+}
+
 function slugify ( $text ) {
 	$slug = remove_accents( $text ); // Convert to ASCII
 	// Standard replacements
