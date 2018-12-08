@@ -109,7 +109,7 @@ function _log ( $args, $type = 'info' ) {
 		elseif ( is_bool( $arg ) ) {
 			$message .= $arg ? 'True' : 'False';
 		}
-		elseif ( ! is_string( $part ) ) {
+		elseif ( ! is_string( $arg ) ) {
 			$message .= print_r( $arg, true );
 		} else {
 			$message .= $arg;
