@@ -5,8 +5,6 @@
 
 namespace {{namespace}}\functions;
 
-use {{namespace}}\Core\Config;
-
 function log_info () {
 	_log( \func_get_args(), 'info' );
 }
@@ -25,11 +23,11 @@ function log_error () {
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/includes/hooks.php
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Logger.php
 function _handle_log ( $message, $type, $timestamp ) {
-	\do_action( Config::get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
+	\do_action( config_get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
 }
 
 function _is_logger_enabled () {
-	return \apply_filters( Config::get( 'PREFIX' ) . 'is_logger_enabled', false );
+	return \apply_filters( config_get( 'PREFIX' ) . 'is_logger_enabled', false );
 }
 
 function _log ( $args, $type ) {

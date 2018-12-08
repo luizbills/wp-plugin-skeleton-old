@@ -5,8 +5,8 @@
 
 namespace {{namespace}}\Core;
 
-use {{namespace}}\Core\Config;
 use function {{namespace}}\functions\include_template;
+use function {{namespace}}\functions\config_get;
 
 final class Plugin {
 
@@ -52,11 +52,11 @@ final class Plugin {
 	}
 
 	protected function _includes () {
-		require_once Config::get( 'DIR' ) . '/includes/index.php';
+		require_once config_get( 'DIR' ) . '/includes/index.php';
 	}
 
 	public function load_plugin_textdomain () {
-		\load_plugin_textdomain( '{{plugin_text_domain}}', false, \dirname( \plugin_basename( Config::get('FILE') ) ) . '/languages/' );
+		\load_plugin_textdomain( '{{plugin_text_domain}}', false, \dirname( \plugin_basename( config_get('FILE') ) ) . '/languages/' );
 	}
 
 	public function register_init_hook ( $callback, $priority = 10 ) {
@@ -68,7 +68,7 @@ final class Plugin {
 	}
 
 	protected function get_init_hook_action_name () {
-		return Config::get('PREFIX') . 'plugin_init';
+		return config_get('PREFIX') . 'plugin_init';
 	}
 
 	public function is_active () {
@@ -80,7 +80,7 @@ final class Plugin {
 	}
 
 	public function print_missing_dependencies_error () {
-		$message = \esc_html__( 'Missing requirements for ', 'mitsp-forms' ) . Config::get('PLUGIN_NAME');
+		$message = \esc_html__( 'Missing requirements for ', 'mitsp-forms' ) . config_get('PLUGIN_NAME');
 
 		include_template( 'admin-notice.php', [
 			'message' => $message,

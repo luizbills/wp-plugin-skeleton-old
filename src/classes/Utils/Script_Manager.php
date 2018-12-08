@@ -5,8 +5,8 @@
 
 namespace {{namespace}}\Utils;
 
-use {{namespace}}\Core\Config;
 use function {{namespace}}\functions\get_asset_url;
+use function {{namespace}}\functions\config_get;
 
 class Script_Manager {
 
@@ -150,10 +150,10 @@ class Script_Manager {
 		return [
 			'handle' => '',
 			'src' => '',
-			'version' => Config::get( 'VERSION' ),
+			'version' => config_get( 'VERSION' ),
 			'in_admin' => false,
 			'condition' => null,
-			'prefix' => Config::get( 'PREFIX' ),
+			'prefix' => config_get( 'PREFIX' ),
 		];
 	}
 }

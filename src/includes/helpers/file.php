@@ -5,7 +5,7 @@
 
 namespace {{namespace}}\functions;
 
-use {{namespace}}\Core\Config;
+use function {{namespace}}\functions\config_get;
 
 function get_file_extension ( $path ) {
 	return \strtolower( pathinfo( $path, PATHINFO_EXTENSION ) );
@@ -19,5 +19,5 @@ function create_path ( $path ) {
 }
 
 function get_asset_url ( $file_path ) {
-	return \plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
+	return \plugins_url( config_get( 'ASSETS_DIR' ) . '/' . $file_path, config_get('FILE') );
 }
