@@ -105,8 +105,18 @@ $files = [
 		'Abstract_Hooker.php',
 	],
 	'includes' => [
-		'functions.php',
+		'helpers.php',
 		'hooks.php',
+	],
+	'includes/helpers' => [
+		'cache.php',
+		'config.php',
+		'file.php',
+		'logger.php',
+		'post.php',
+		'slug.php',
+		'template.php',
+		'user.php',
 	],
 	'languages' => [
 		'.gitkeep'
