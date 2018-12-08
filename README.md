@@ -21,6 +21,7 @@ git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 ## Contributing
 
 - For features or bug fixes, follow the [CONTRIBUTING guide](CONTRIBUTING.md).
+- Or create an issue for suggestions and other reports.
 
 ## LICENSE
 
