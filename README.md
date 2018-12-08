@@ -20,25 +20,7 @@ git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 
 ## Contributing
 
-- Fork this repo
-- Clone inside of `wp-content/plugins` folder
-- Enable the WordPress Debug mode in your `wp-config.php`:
-
-```php
-define( 'WP_DEBUG', true );
-define( 'WP_DEBUG_DISPLAY', true );
-define( 'WP_DEBUG_LOG', true );
-```
-
-- **Make your changes!**
-- Optional: *create a `src/includes/dev.php` to test your changes (see `src/includes/dev-sample.php`).*
-- Open your terminal and run the following commands:
-
-```bash
-cd /path/to/your/wp-content/plugins/wp-plugin-skeleton
-php ./install --test
-```
-- Then, open your WordPress admin panel and active the **`A Skeleton Test`** plugin.
+- For features or bug fixes, follow the [CONTRIBUTING guide](CONTRIBUTING.md).
 
 ## LICENSE
 
