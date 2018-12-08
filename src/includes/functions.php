@@ -95,29 +95,39 @@ function log_error () {
 	_log( func_get_args(), 'error' );
 }
 
-/* note: _log is a internal function, don't use this directly */
-function _log ( $data, $type ) {
-	if ( defined( 'WP_DEBUG' ) && ! WP_DEBUG ) return;
+/* Internal Helpers */
+function _log ( $args, $type = 'info' ) {
+	if ( ! _is_logger_enabled() ) return;
 
-	$data = is_array( $data ) ? $data : [ $data ];
-	$message_parts = [];
+	$args = is_array( $args ) ? $args : [ $args ];
+	$message = '';
 
-	foreach( $data as $part ) {
-		if ( null === $part ) {
-			$message_parts[] = 'Null';
+	foreach( $args as $arg ) {
+		if ( null === $arg ) {
+			$message .= 'Null';
 		}
-		elseif ( is_bool( $part ) ) {
-			$message_parts[] = $part ? 'True' : 'False';
+		elseif ( is_bool( $arg ) ) {
+			$message .= $arg ? 'True' : 'False';
 		}
 		elseif ( ! is_string( $part ) ) {
-			$message_parts[] = print_r( $part, true );
+			$message .= print_r( $arg, true );
 		} else {
-			$message_parts[] = $part;
+			$message .= $arg;
 		}
+		$message .= ' ';
 	}
 
-	$type = strtoupper( $type );
-	$message = Config::get( 'SLUG' ) . ".$type: " . implode( ' ', $message_parts );
+	_handle_log( $type, $message, time() );
+}
 
-	error_log( $message );
+function _handle_log ( $type, $message, $timestamp ) {
+	$type = strtoupper( $type );
+	$plugin_slug = Config::get( 'SLUG' );
+	
+	// default log handler
+	error_log( "$plugin_slug.$type: $message" );
+}
+
+function _is_logger_enabled () {
+	return WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
 }
