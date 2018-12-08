@@ -24,7 +24,7 @@ class Script_Manager {
 		foreach ( $this->scripts as $args ) {
 			if ( $args['in_admin'] ) continue;
 
-			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+			if ( null === $args['condition'] || \call_user_func( $args['condition'] ) ) {
 				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
 				\wp_enqueue_script(
@@ -40,7 +40,7 @@ class Script_Manager {
 		foreach ( $this->styles as $args ) {
 			if ( $args['in_admin'] ) continue;
 
-			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+			if ( null === $args['condition'] || \call_user_func( $args['condition'] ) ) {
 				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
 				\wp_enqueue_style(
@@ -58,7 +58,7 @@ class Script_Manager {
 		foreach ( $this->scripts as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
-			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+			if ( null === $args['condition'] || \call_user_func( $args['condition'] ) ) {
 				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
 				\wp_enqueue_script(
@@ -74,7 +74,7 @@ class Script_Manager {
 		foreach ( $this->styles as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
-			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+			if ( null === $args['condition'] || \call_user_func( $args['condition'] ) ) {
 				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
 				\wp_enqueue_style(
