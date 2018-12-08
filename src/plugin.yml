@@ -2,7 +2,7 @@
 
 # all values here are stored in Core\Config class
 # and all are immutables (can not be overridden)
-VERSION: 1.0.0
+VERSION: 1.0
 PLUGIN_NAME: '{{plugin_name}}'
 ASSETS_DIR: assets
 TEMPLATES_DIR: templates
