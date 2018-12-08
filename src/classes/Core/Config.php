@@ -27,15 +27,15 @@ class Config {
 		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_slug = slugify( $plugin_config['PLUGIN_NAME'] );
 		$plugin_prefix = snake_slugify( $plugin_slug ) . '_';
-
-		foreach ( $plugin_config as $key => $value ) {
-			$options->set( $key, $value );
-		}
-
+		
 		$options->set( 'SLUG', $plugin_slug );
 		$options->set( 'PREFIX', $plugin_prefix );
 		$options->set( 'FILE', $PLUGIN_FILE );
 		$options->set( 'DIR', dirname( $PLUGIN_FILE ) );
+
+		foreach ( $plugin_config as $key => $value ) {
+			$options->set( $key, $value );
+		}
 	}
 
 	public static function set ( $key, $value ) {
