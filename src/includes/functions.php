@@ -123,7 +123,6 @@ function _log ( $args, $type = 'info' ) {
 function _handle_log ( $type, $message, $timestamp ) {
 	$type = strtoupper( $type );
 	$plugin_slug = Config::get( 'SLUG' );
-	
 	// default log handler
 	error_log( "$plugin_slug.$type: $message" );
 }
