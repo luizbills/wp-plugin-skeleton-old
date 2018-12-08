@@ -130,7 +130,8 @@ $files = [
 
 // create all files and folders
 $folder_name = slugify( $values['Plugin Name'] );
-$target_dir = dirname( __DIR__ ) . "/$folder_name";
+$root = dirname( __DIR__ );
+$target_dir = dirname( $root ) . "/$folder_name";
 
 if ( ! file_exists( $target_dir ) ) {
 	mkdir( $target_dir, 0755 );
@@ -156,7 +157,7 @@ if ( ! file_exists( $target_dir ) ) {
 
 chdir( $target_dir );
 
-if ( $is_test && file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
+if ( $is_test && file_exists( $root . "/src/includes/dev.php" ) ) {
 	$files['includes'][] = 'dev.php';
 }
 
@@ -166,7 +167,7 @@ foreach ( $files as $dir => $contents ) {
 	}
 
 	foreach ( $contents as $file ) {
-		$file_content = '.gitkeep' !== $file ? file_get_contents( __DIR__ . "/src/$dir/$file" ) : '';
+		$file_content = '.gitkeep' !== $file ? file_get_contents( $root . "/src/$dir/$file" ) : '';
 		$file_content = '.gitkeep' !== $file ? str_replace( $find, $replace, $file_content) : '';
 
 		// find and replace the placeholders
@@ -177,7 +178,7 @@ foreach ( $files as $dir => $contents ) {
 if ( $is_test ) {
 	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 
-	if ( file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
+	if ( file_exists( $root . "/src/includes/dev.php" ) ) {
 		$append_to = "$target_dir/includes/index.php";
 		$file_content = file_get_contents( $append_to );
 		$file_content .= PHP_EOL . "require_once 'dev.php';";
@@ -192,7 +193,7 @@ echo shell_exec( 'composer update' );
 
 // save the plugin folder name in a temporary file
 if ( ! $is_test ) {
-	file_put_contents( dirname( __DIR__ ) . '/.tmp_wp_plugin_dir', $folder_name );
+	file_put_contents( dirname( $root ) . '/.tmp_wp_plugin_dir', $folder_name );
 }
 
 cls();

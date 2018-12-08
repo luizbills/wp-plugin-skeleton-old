@@ -11,7 +11,7 @@
 ```
 git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 && cd $_ \
-&& php ./install && sleep .1 \
+&& php bin/install && sleep .1 \
 && cd ../$(cat ../.tmp_wp_plugin_dir) \
 && rm -f ../.tmp_wp_plugin_dir \
 && rm -rf ../_skeleton \

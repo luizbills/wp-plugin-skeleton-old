@@ -17,7 +17,7 @@ define( 'WP_DEBUG_LOG', true );
 
 ```bash
 cd /path/to/your/wp-content/plugins/wp-plugin-skeleton
-php ./install --test
+php bin/install --test
 ```
 
 - Then, open your WordPress admin panel and active the **`A Skeleton Test`** plugin.
