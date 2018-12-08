@@ -3,6 +3,8 @@
  * @version 1.1.0
  */
 
+if ( ! defined( 'WPINC') ) exit(1);
+
 $defaults = [
 	'class' => '',
 	'message' => 'Empty message'
