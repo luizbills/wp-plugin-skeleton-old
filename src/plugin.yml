@@ -12,4 +12,4 @@ TEXT_DOMAIN: '{{plugin_text_domain}}'
 
 # important: don't use reserved keys (they're used internally)
 # reserved keys: SLUG, PREFIX, FILE, DIR
-# see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Core/Config.php
+# see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Core/Config.php#L31-L34
