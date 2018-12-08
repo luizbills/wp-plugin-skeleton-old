@@ -35,6 +35,10 @@ function config_get ( $key, $default = null ) {
 	return Config::get_options()->get( $key, $default );
 }
 
+function get_file_extension ( $path ) {
+	return strtolower( pathinfo( $path, PATHINFO_EXTENSION ) );
+}
+
 function get_asset_url ( $file_path ) {
 	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
 }
