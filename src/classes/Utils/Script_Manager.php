@@ -16,18 +16,18 @@ class Script_Manager {
 	protected $styles = [];
 
 	public function __construct () {
-		add_action( 'wp_enqueue_scripts', [ $this, 'frontend_enqueue_scripts' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		\add_action( 'wp_enqueue_scripts', [ $this, 'frontend_enqueue_scripts' ] );
+		\add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 	}
 
 	public function frontend_enqueue_scripts () {
 		foreach ( $this->scripts as $args ) {
 			if ( $args['in_admin'] ) continue;
 
-			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
+			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
-				wp_enqueue_script(
+				\wp_enqueue_script(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
@@ -40,10 +40,10 @@ class Script_Manager {
 		foreach ( $this->styles as $args ) {
 			if ( $args['in_admin'] ) continue;
 
-			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
+			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
-				wp_enqueue_style(
+				\wp_enqueue_style(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
@@ -58,10 +58,10 @@ class Script_Manager {
 		foreach ( $this->scripts as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
-			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
+			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
-				wp_enqueue_script(
+				\wp_enqueue_script(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
@@ -74,10 +74,10 @@ class Script_Manager {
 		foreach ( $this->styles as $args ) {
 			if ( ! $args['in_admin'] ) continue;
 
-			if ( is_null( $args['condition'] ) || call_user_func( $args['condition'] ) ) {
-				$is_plugin_asset = false !== strpos( $args['src'], get_asset_url( '' ) );
+			if ( \is_null( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				$is_plugin_asset = false !== \strpos( $args['src'], get_asset_url( '' ) );
 
-				wp_enqueue_style(
+				\wp_enqueue_style(
 					$is_plugin_asset ? $args['prefix'] . $args['handle'] : $args['handle'],
 					$args['src'],
 					$args['deps'],
@@ -112,7 +112,7 @@ class Script_Manager {
 			'script' => '.js',
 			'style' => '.css'
 		];
-		$args = array_merge( $this->$get_defaults(), $args );
+		$args = \array_merge( $this->$get_defaults(), $args );
 
 		if ( empty( $args['deps'] ) ) {
 			$args['deps'] = [];

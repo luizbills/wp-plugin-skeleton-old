@@ -8,15 +8,15 @@ namespace {{namespace}}\functions;
 use {{namespace}}\Core\Config;
 
 function log_info () {
-	_log( func_get_args(), 'info' );
+	_log( \func_get_args(), 'info' );
 }
 
 function log_debug () {
-	_log( func_get_args(), 'debug' );
+	_log( \func_get_args(), 'debug' );
 }
 
 function log_error () {
-	_log( func_get_args(), 'error' );
+	_log( \func_get_args(), 'error' );
 }
 
 /* Internal Helpers */
@@ -25,31 +25,31 @@ function log_error () {
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/includes/hooks.php
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Logger.php
 function _handle_log ( $message, $type, $timestamp ) {
-	do_action( Config::get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
+	\do_action( Config::get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
 }
 
 function _is_logger_enabled () {
-	return apply_filters( Config::get( 'PREFIX' ) . 'is_logger_enabled', false );
+	return \apply_filters( Config::get( 'PREFIX' ) . 'is_logger_enabled', false );
 }
 
 function _log ( $args, $type ) {
 	if ( ! _is_logger_enabled() ) return;
 
-	$args = is_array( $args ) ? $args : [ $args ];
+	$args = \is_array( $args ) ? $args : [ $args ];
 	$message = '';
 	foreach( $args as $arg ) {
 		if ( null === $arg ) {
 			$message .= 'Null';
 		}
-		elseif ( is_bool( $arg ) ) {
+		elseif ( \is_bool( $arg ) ) {
 			$message .= $arg ? 'True' : 'False';
 		}
-		elseif ( ! is_string( $arg ) ) {
+		elseif ( ! \is_string( $arg ) ) {
 			$message .= print_r( $arg, true );
 		} else {
 			$message .= $arg;
 		}
 		$message .= ' ';
 	}
-	_handle_log( $message, $type, time() );
+	_handle_log( $message, $type, \time() );
 }

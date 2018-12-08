@@ -9,7 +9,7 @@ class Data_Store {
 	protected $data = [];
 
 	public function __construct ( $_values = [] ) {
-		$values = array_merge( $this->get_defaults(), $_values );
+		$values = \array_merge( $this->get_defaults(), $_values );
 
 		foreach ( $values as $key => $value) {
 			$this->set( $key, $value );
@@ -17,7 +17,7 @@ class Data_Store {
 
 		$this->after_init();
 	}
-	
+
 	protected function after_init () {}
 
 	public function set ( $key, $value ) {

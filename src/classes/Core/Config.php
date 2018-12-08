@@ -14,24 +14,24 @@ class Config {
 	protected static $options = null;
 
 	public static function get_options () {
-		if ( is_null( self::$options ) ) {
+		if ( null === self::$options ) {
 			self::$options = new Immutable_Data_Store();
 		}
 		return self::$options;
 	}
 
 	public static function setup ( $PLUGIN_FILE ) {
-		if ( ! is_null( self::$options ) ) return;
+		if ( ! null === self::$options ) return;
 
 		$options = self::get_options();
-		$plugin_config = Yaml::parseFile( dirname( $PLUGIN_FILE ) . '/plugin.yml' );
+		$plugin_config = Yaml::parseFile( \dirname( $PLUGIN_FILE ) . '/plugin.yml' );
 		$plugin_slug = slugify( $plugin_config['PLUGIN_NAME'] );
 		$plugin_prefix = snake_slugify( $plugin_slug ) . '_';
-		
+
 		$options->set( 'SLUG', $plugin_slug );
 		$options->set( 'PREFIX', $plugin_prefix );
 		$options->set( 'FILE', $PLUGIN_FILE );
-		$options->set( 'DIR', dirname( $PLUGIN_FILE ) );
+		$options->set( 'DIR', \dirname( $PLUGIN_FILE ) );
 
 		foreach ( $plugin_config as $key => $value ) {
 			$options->set( $key, $value );
