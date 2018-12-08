@@ -27,6 +27,31 @@ function user_has_role ( $role, $user_id = null ) {
 	return false;
 }
 
+// based on: https://github.com/stevegrunwell/wp-cache-remember
+function wp_cache_remember( $key, $callback, $group = '', $expire = 0 ) {
+	$found  = false;
+	$cached = wp_cache_get( $key, $group, false, $found );
+	if ( false !== $found ) {
+		return $cached;
+	}
+	$value = $callback();
+	if ( ! is_wp_error( $value ) ) {
+		wp_cache_set( $key, $value, $group, $expire );
+	}
+	return $value;
+}
+
+// based on: https://github.com/stevegrunwell/wp-cache-remember
+function wp_cache_forget( $key, $group = '', $default = null ) {
+	$found  = false;
+	$cached = wp_cache_get( $key, $group, false, $found );
+	if ( false !== $found ) {
+		wp_cache_delete( $key, $group );
+		return $cached;
+	}
+	return $default;
+}
+
 function config_set ( $key, $value ) {
 	return Config::get_options()->set( $key, $value );
 }
