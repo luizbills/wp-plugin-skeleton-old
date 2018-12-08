@@ -3,7 +3,7 @@
 namespace {{namespace}}\Core;
 
 use {{namespace}}\Core\Config;
-use function {{namespace}}\functions\include_template_file;
+use function {{namespace}}\functions\include_template;
 
 final class Plugin {
 
@@ -92,7 +92,7 @@ final class Plugin {
 	public function print_missing_dependencies_error () {
 		$message = esc_html__( 'Missing requirements for ', 'mitsp-forms' ) . Config::get('PLUGIN_NAME');
 
-		include_template_file( 'admin-notice.php', [
+		include_template( 'admin-notice.php', [
 			'message' => $message,
 			'class' => 'error'
 		] );
