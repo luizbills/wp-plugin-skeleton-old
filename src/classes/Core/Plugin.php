@@ -19,15 +19,16 @@ final class Plugin {
 		return self::$_instance;
 	}
 
+	public static function run () {
+		return self::get_instance();
+	}
+
 	protected function __construct () {
 		if ( self::HAS_DEPENDENCIES ) {
 			add_action( 'plugins_loaded', [ $this, 'start' ] );
 		} else {
 			$this->start();
 		}
-
-		register_activation_hook( Config::get('FILE'), [ $this, 'activation' ] );
-		register_deactivation_hook( Config::get('FILE'), [ $this, 'deactivation' ] );
 	}
 
 	public function start () {
@@ -44,7 +45,7 @@ final class Plugin {
 
 		$this->_includes();
 
-		add_action( 'init', [ $this, 'do_init_hook_action' ], 0 );
+		add_action( 'init', [ $this, 'do_init_hook_action' ] );
 	}
 
 	protected function _includes () {
@@ -65,21 +66,6 @@ final class Plugin {
 
 	protected function get_init_hook_action_name () {
 		return Config::get('PREFIX') . 'plugin_init';
-	}
-
-	public function activation () {
-		if ( ! current_user_can( 'activate_plugins' ) ) return;
-		// more info: https://codex.wordpress.org/Function_Reference/register_activation_hook/
-
-		flush_rewrite_rules();
-		//$this->set_option( 'version', Config::get('VERSION') );
-	}
-
-	public function deactivation () {
-		if ( ! current_user_can( 'activate_plugins' ) ) return;
-		// more info: https://codex.wordpress.org/Function_Reference/register_deactivation_hook/
-
-		flush_rewrite_rules();
 	}
 
 	public function is_active () { return $this->_actived; }
@@ -103,9 +89,5 @@ final class Plugin {
 
 	public function __wakeup () {
 		_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', '1.0.0' );
-	}
-
-	public static function run () {
-		return self::get_instance();
 	}
 }
