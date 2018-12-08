@@ -1,4 +1,7 @@
 <?php
+/**
+ * @version 1.0.0
+ */
 
 require_once 'helpers/cache.php';
 require_once 'helpers/config.php';
