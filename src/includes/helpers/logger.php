@@ -21,19 +21,20 @@ function log_error () {
 
 /* Internal Helpers */
 
-// You must create your own log handler
+// You can create your own log handler
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/includes/hooks.php
-function _handle_log ( $type, $message, $timestamp ) {
+// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Logger.php
+function _handle_log ( $message, $type, $timestamp ) {
 	do_action( Config::get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
 }
 
 function _is_logger_enabled () {
-	$is_enabled = WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
-	return apply_filters( Config::get( 'PREFIX' ) . 'is_logger_enabled', $is_enabled );
+	return apply_filters( Config::get( 'PREFIX' ) . 'is_logger_enabled', false );
 }
 
 function _log ( $args, $type ) {
 	if ( ! _is_logger_enabled() ) return;
+
 	$args = is_array( $args ) ? $args : [ $args ];
 	$message = '';
 	foreach( $args as $arg ) {

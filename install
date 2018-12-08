@@ -67,7 +67,7 @@ $replace = [
 	$values['Plugin Name'],
 	$values['Plugin Description'],
 	$values['Plugin Author'],
-	substr ( $values['Plugin Author URL'], 0, 4 ) === 'http' ? $values['Plugin Author URL'] : 'https://' . $values['Plugin Author URL'],
+	substr( $values['Plugin Author URL'], 0, 4 ) === 'http' ? $values['Plugin Author URL'] : 'https://' . $values['Plugin Author URL'],
 	$values['Plugin Text Domain'],
 ];
 
@@ -91,6 +91,7 @@ $files = [
 	],
 	'classes' => [
 		'Demo.php',
+		'Logger.php',
 	],
 	'classes/Core' => [
 		'Config.php',
