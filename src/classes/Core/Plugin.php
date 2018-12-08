@@ -49,7 +49,7 @@ final class Plugin {
 
 	protected function _hooks () {
 		$dir = Config::get( 'DIR' );
-		require_once $dir . '/includes/hooks.php';
+		require_once $dir . '/includes/index.php';
 	}
 
 	public function load_plugin_textdomain () {
