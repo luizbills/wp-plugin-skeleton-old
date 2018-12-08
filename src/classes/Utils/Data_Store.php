@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace {{namespace}}\Utils;
@@ -8,17 +8,11 @@ namespace {{namespace}}\Utils;
 class Data_Store {
 	protected $data = [];
 
-	public function __construct ( $_values = [] ) {
-		$values = \array_merge( $this->get_defaults(), $_values );
-
+	public function __construct ( $values = [] ) {
 		foreach ( $values as $key => $value) {
 			$this->set( $key, $value );
 		}
-
-		$this->after_init();
 	}
-
-	protected function after_init () {}
 
 	public function set ( $key, $value ) {
 		$this->data[ $key ] = $value;
@@ -33,13 +27,9 @@ class Data_Store {
 		return isset( $this->data[ $key ] );
 	}
 
-	public function delete ( $key ) {
+	public function clear ( $key ) {
 		if ( isset( $this->data[ $key ] ) ) {
 			unset( $this->data[ $key ] );
 		}
-	}
-
-	public function get_defaults () {
-		return [];
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace {{namespace}}\Utils;
@@ -14,7 +14,7 @@ class Immutable_Data_Store extends Data_Store {
 		return parent::set( $key, $value );
 	}
 
-	public function delete ( $key ) {
+	public function clear ( $key ) {
 		throw new \Exception( 'Can not delete keys' );
 	}
 }
