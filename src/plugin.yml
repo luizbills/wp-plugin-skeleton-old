@@ -1,5 +1,15 @@
+# learn yaml: https://github.com/darvid/trine/wiki/YAML-Primer
+
+# all values here are stored in Core\Config class
+# and all are immutables (can not be overridden)
 VERSION: 1.0.0
-PLUGIN_NAME: {{plugin_name}}
+PLUGIN_NAME: '{{plugin_name}}'
 ASSETS_DIR: assets
 TEMPLATES_DIR: templates
-TEXT_DOMAIN: {{plugin_text_domain}}
+TEXT_DOMAIN: '{{plugin_text_domain}}'
+
+# declare other values that you want
+
+# important: don't use reserved keys (they're used internally)
+# reserved keys: SLUG, PREFIX, FILE, DIR
+# see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Core/Config.php
