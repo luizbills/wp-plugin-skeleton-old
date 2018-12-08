@@ -2,3 +2,4 @@ VERSION: 1.0.0
 PLUGIN_NAME: {{plugin_name}}
 ASSETS_DIR: assets
 TEMPLATES_DIR: templates
+TEXT_DOMAIN: {{plugin_text_domain}}
