@@ -42,14 +42,13 @@ final class Plugin {
 
 		$this->_actived = true;
 
-		$this->_hooks();
+		$this->_includes();
 
 		add_action( 'init', [ $this, 'do_init_hook_action' ], 0 );
 	}
 
-	protected function _hooks () {
-		$dir = Config::get( 'DIR' );
-		require_once $dir . '/includes/hooks.php';
+	protected function _includes () {
+		require_once Config::get( 'DIR' ) . '/includes/index.php';
 	}
 
 	public function load_plugin_textdomain () {

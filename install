@@ -107,6 +107,7 @@ $files = [
 	'includes' => [
 		'helpers.php',
 		'hooks.php',
+		'index.php',
 	],
 	'includes/helpers' => [
 		'cache.php',
@@ -176,12 +177,11 @@ if ( $is_test ) {
 	file_put_contents( "$target_dir/.wp-plugin-skeleton-test", '' );
 
 	if ( file_exists( __DIR__ . "/src/includes/dev.php" ) ) {
-		$plugin_class_path = "$target_dir/classes/Core/Plugin.php";
-		$file_content = file_get_contents( $plugin_class_path );
-		$find = '\'/includes/hooks.php\';';
-		$replace = $find . PHP_EOL . "\t\trequire_once \$dir . '/includes/dev.php';";
+		$append_to = "$target_dir/includes/index.php";
+		$file_content = file_get_contents( $append_to );
+		$file_content .= PHP_EOL . "require_once 'dev.php';";
 
-		file_put_contents( $plugin_class_path, str_replace( $find, $replace, $file_content ) );
+		file_put_contents( $append_to, $file_content );
 	}
 }
 
