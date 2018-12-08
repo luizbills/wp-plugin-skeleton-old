@@ -12,6 +12,50 @@ function get_post ( $id, $post_type = 'post' ) {
 	return false;
 }
 
+function user_has_role ( $role, $user_id = null ) {
+	if ( empty( $user_id ) ) {
+		$user_id = get_current_user_id();
+	}
+
+	$user = get_userdata( $user_id );
+
+	if ( $user ) {
+		/* works with Roles and Capabilities */
+		return in_array( $role, (array) $user->roles ) || user_can( $user_id, $role );
+	}
+
+	return false;
+}
+
+function config_set ( $key, $value ) {
+	return Config::get_options()->set( $key, $value );
+}
+
+function config_get ( $key, $default = null ) {
+	return Config::get_options()->get( $key, $default );
+}
+
+function get_asset_url ( $file_path ) {
+	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
+}
+
+function get_template ( $template_path, $data = [] ) {
+	ob_start();
+	include Config::get( 'DIR' ) . '/' . Config::get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+	return ob_get_clean();
+}
+
+function include_template ( $template_path, $data = [] ) {
+	echo get_template( $template_path, $data );
+}
+
+function create_path ( $path ) {
+	if ( ! wp_mkdir_p( $path ) ) {
+		throw new \Exception( "could not create $path" );
+	}
+	return false;
+}
+
 function slugify ( $text ) {
 	$slug = remove_accents( $text ); // Convert to ASCII
 	// Standard replacements
@@ -33,50 +77,6 @@ function snake_slugify ( $text ) {
 	$snake_case = str_replace( '-', '_', $snake_case );
 
 	return $snake_case;
-}
-
-function get_asset_url ( $file_path ) {
-	return plugins_url( Config::get( 'ASSETS_DIR' ) . '/' . $file_path, Config::get('FILE') );
-}
-
-function get_template ( $template_path, $data = [] ) {
-	ob_start();
-	include Config::get( 'DIR' ) . '/' . Config::get( 'TEMPLATES_DIR' ) . '/' . $template_path;
-	return ob_get_clean();
-}
-
-function include_template ( $template_path, $data = [] ) {
-	echo get_template( $template_path, $data );
-}
-
-function config_set ( $key, $value ) {
-	return Config::get_options()->set( $key, $value );
-}
-
-function config_get ( $key, $default = null ) {
-	return Config::get_options()->get( $key, $default );
-}
-
-/* works with Roles and Capabilities */
-function user_has_role ( $role, $user_id = null ) {
-	if ( empty( $user_id ) ) {
-		$user_id = get_current_user_id();
-	}
-
-	$user = get_userdata( $user_id );
-
-	if ( $user ) {
-		return in_array( $role, (array) $user->roles ) || user_can( $user_id, $role );
-	}
-
-	return false;
-}
-
-function create_path ( $path ) {
-	if ( ! wp_mkdir_p( $path ) ) {
-		throw new \Exception( "could not create $path" );
-	}
-	return false;
 }
 
 function log_info () {
