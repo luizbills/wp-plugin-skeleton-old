@@ -1,5 +1,7 @@
 <?php
 /**
+ * Based on https://github.com/stevegrunwell/wp-cache-remember
+ *
  * @version 1.0.0
  */
 
