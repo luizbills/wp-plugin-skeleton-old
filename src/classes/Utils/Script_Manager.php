@@ -119,14 +119,14 @@ class Script_Manager {
 		}
 
 		if ( empty( $args['handle'] ) ) {
-			$args['handle'] = basename( $args['src'], $suffix[ $type ] );
+			$args['handle'] = \basename( $args['src'], $suffix[ $type ] );
 		}
 
 		if ( 'script' === $type ) {
-			$args['deps'] = array_merge( $args['deps'], $this->global_script_dependencies );
+			$args['deps'] = \array_merge( $args['deps'], $this->global_script_dependencies );
 			$this->scripts[] = $args;
 		} elseif ( 'style' === $type ) {
-			$args['deps'] = array_merge( $args['deps'], $this->global_style_dependencies );
+			$args['deps'] = \array_merge( $args['deps'], $this->global_style_dependencies );
 			$this->styles[] = $args;
 		}
 	}
