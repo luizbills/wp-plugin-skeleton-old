@@ -1,12 +1,12 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.0.1
  */
 
 namespace {{namespace}}\functions;
 
 function get_template ( $template_path, $data = [] ) {
-	$template_path = config_get( 'DIR' ) . '/' . config_get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+	$template_path = config_get( 'ROOT_DIR' ) . '/' . config_get( 'TEMPLATES_DIR' ) . '/' . $template_path;
 	$template_string = \file_get_contents( $template_path );
 	return render_template_string( $template_string, $data );
 }

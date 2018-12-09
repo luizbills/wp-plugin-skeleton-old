@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 namespace {{namespace}}\Core;
@@ -52,7 +52,7 @@ final class Plugin {
 	}
 
 	protected function _includes () {
-		require_once config_get( 'DIR' ) . '/includes/index.php';
+		require_once config_get( 'ROOT_DIR' ) . '/includes/index.php';
 	}
 
 	public function load_plugin_textdomain () {
@@ -80,7 +80,7 @@ final class Plugin {
 	}
 
 	public function print_missing_dependencies_error () {
-		$message = \__( 'Missing requirements for ', 'mitsp-forms' ) . config_get( 'PLUGIN_NAME' );
+		$message = \__( 'Missing requirements for ', 'mitsp-forms' ) . config_get( 'NAME' );
 
 		include_template( 'admin-notice.php', [
 			'message' => $message,

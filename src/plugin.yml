@@ -3,7 +3,7 @@
 # all values here are stored in Core\Config class
 # and all are immutables (can not be overridden)
 VERSION: '{{plugin_version}}'
-PLUGIN_NAME: '{{plugin_name}}'
+NAME: '{{plugin_name}}'
 ASSETS_DIR: 'assets'
 TEMPLATES_DIR: 'templates'
 TEXT_DOMAIN: '{{plugin_text_domain}}'
@@ -11,5 +11,5 @@ TEXT_DOMAIN: '{{plugin_text_domain}}'
 # declare other values that you want
 
 # important: don't use reserved keys (they're used internally)
-# reserved keys: SLUG, PREFIX, FILE, DIR
-# see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Core/Config.php#L31-L34
+# reserved keys: SLUG, PREFIX, MAIN_FILE, ROOT_DIR
+# see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Core/Config.php#L32-L35

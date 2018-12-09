@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 namespace {{namespace}}\Core;
@@ -20,18 +20,19 @@ class Config {
 		return self::$options;
 	}
 
-	public static function setup ( $PLUGIN_FILE ) {
+	public static function setup ( $MAIN_FILE ) {
 		if ( ! null === self::$options ) return;
 
-		$options = self::get_options();
-		$plugin_config = Yaml::parseFile( \dirname( $PLUGIN_FILE ) . '/plugin.yml' );
-		$plugin_slug = slugify( $plugin_config['PLUGIN_NAME'] );
+		$root = \dirname( $MAIN_FILE );
+		$plugin_config = Yaml::parseFile( $root . '/plugin.yml' );
+		$plugin_slug = slugify( $plugin_config['NAME'] );
 		$plugin_prefix = snake_slugify( $plugin_slug ) . '_';
+		$options = self::get_options();
 
 		$options->set( 'SLUG', $plugin_slug );
 		$options->set( 'PREFIX', $plugin_prefix );
-		$options->set( 'FILE', $PLUGIN_FILE );
-		$options->set( 'DIR', \dirname( $PLUGIN_FILE ) );
+		$options->set( 'MAIN_FILE', $MAIN_FILE );
+		$options->set( 'ROOT_DIR', $root );
 
 		foreach ( $plugin_config as $key => $value ) {
 			$options->set( $key, $value );
