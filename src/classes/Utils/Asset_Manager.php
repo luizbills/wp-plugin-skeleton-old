@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 namespace {{namespace}}\Utils;
@@ -40,13 +40,29 @@ class Asset_Manager {
 			$args['deps'] = [];
 		}
 
-		$args['deps'] = \array_merge( $args['deps'], $this->global_dependencies[ $type ] );
+		$args['deps'] = \array_merge( $args['deps'], $this->get_global_dependencies( $type ) );
 
+		if ( empty( $this->enqueued[ $type ] ) ) {
+			$this->enqueued[ $type ] = [];
+		}
 		$this->enqueued[ $type ][] = $args;
+
+		\do_action( config_get( 'PREFIX' ) . 'added_asset', $args );
 	}
 
 	public function add_global_dependency ( $handle, $type = 'js' ) {
-		$this->global_dependencies[ $type ] = $handle;
+		if ( empty( $this->global_dependencies[ $type ] ) ) {
+			$this->global_dependencies[ $type ] = [];
+		}
+		$this->global_dependencies[ $type ][] = $handle;
+		\do_action( config_get( 'PREFIX' ) . 'added_global_asset_dependency', $handle );
+	}
+
+	public function get_global_dependencies ( $type = 'js' ) {
+		if ( empty( $this->global_dependencies[ $type ] ) ) {
+			$this->global_dependencies[ $type ] = [];
+		}
+		return $this->global_dependencies[ $type ];
 	}
 
 	public function enqueue_assets_in_frontend () {
