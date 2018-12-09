@@ -1,16 +1,16 @@
 <?php
 /*
 Plugin Name: {{plugin_name}}
+Version: {{plugin_version}}
 Description: {{plugin_description}}
-Version: 1.0.0
 Author: {{plugin_author}}
 Author URI: {{plugin_author_uri}}
 
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
 Text Domain: {{plugin_text_domain}}
 Domain Path: /languages
+
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
 if ( ! defined( 'WPINC' ) ) die();

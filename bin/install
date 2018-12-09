@@ -2,7 +2,10 @@
 <?php
 
 $is_test = in_array( '--test', $argv );
-$values = [];
+$defaults = [
+	'Version' => '1.0.0',
+];
+$values = null;
 $ready = false;
 $prompts = [
 	'Plugin Name' => '(e.g. Awesome Plugin)',
@@ -11,6 +14,7 @@ $prompts = [
 	'Plugin Author URL' => '(e.g. luizpb.com)',
 	'Plugin Text Domain' => '(e.g. awesome-plugin)',
 	'PHP Namespace' => '(e.g. luizbills\AwesomePlugin)',
+	'Version' => '[1.0.0]',
 ];
 
 // auto fill if has `--test` option
@@ -23,18 +27,28 @@ if ( $is_test ) {
 		'Plugin Author URL' => 'https://github.com/luizbills/wp-plugin-skeleton',
 		'Plugin Text Domain' => 'skeleton-dev-plugin',
 		'PHP Namespace' => 'Skeleton\DevPlugin',
+		'Version' => date( 'Y-m-d @ H:m:s' ),
 	];
 }
 
 // get some plugin informations
 while ( ! $ready ) {
-	foreach ( $prompts as $var => $eg ) {
+	$values = [];
+
+	foreach ( $prompts as $var => $desc ) {
 		$value = '';
 		while ( empty( $value ) ) {
 			cls();
-			$value = readline( "$var $eg: " );
+			$value = readline( "$var $desc: " );
+			if ( empty( $value ) && isset( $defaults[ $var ] ) ) {
+				$value = $defaults[ $var ];
+			}
 		}
 		$values[ $var ] = $value;
+	}
+
+	if ( empty( $values['Version'] ) ) {
+		$values['Version'] = '1.0.0';
 	}
 
 	cls();
@@ -59,7 +73,8 @@ $find = [
 	'{{plugin_description}}',
 	'{{plugin_author}}',
 	'{{plugin_author_uri}}',
-	'{{plugin_text_domain}}'
+	'{{plugin_text_domain}}',
+	'{{plugin_version}}',
 ];
 $replace = [
 	$values['PHP Namespace'],
@@ -69,6 +84,7 @@ $replace = [
 	$values['Plugin Author'],
 	substr( $values['Plugin Author URL'], 0, 4 ) === 'http' ? $values['Plugin Author URL'] : 'https://' . $values['Plugin Author URL'],
 	$values['Plugin Text Domain'],
+	$values['Version'],
 ];
 
 // list of files and folders
