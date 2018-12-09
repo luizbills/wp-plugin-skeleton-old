@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.1
+ * @version 1.2.0
  */
 
 namespace {{namespace}}\Utils;
@@ -40,7 +40,14 @@ class Asset_Manager {
 		}
 		$this->enqueued[ $type ][] = $args;
 
-		\do_action( config_get( 'PREFIX' ) . 'added_asset', $args );
+		\do_action( config_get( 'PREFIX' ) . 'added_asset', $args, $type );
+	}
+
+	public function get_enqueued ( $type = 'js' ) {
+		if ( empty( $this->enqueued[ $type ] ) ) {
+			$this->enqueued[ $type ] = [];
+		}
+		return $this->enqueued[ $type ];
 	}
 
 	public function add_global_dependency ( $handle, $type = 'js' ) {
@@ -48,6 +55,7 @@ class Asset_Manager {
 			$this->global_dependencies[ $type ] = [];
 		}
 		$this->global_dependencies[ $type ][] = $handle;
+
 		\do_action( config_get( 'PREFIX' ) . 'added_global_asset_dependency', $handle );
 	}
 
@@ -61,7 +69,7 @@ class Asset_Manager {
 	public function enqueue_assets () {
 		$in_admin = is_admin();
 
-		foreach ( $this->enqueued['js'] as $args ) {
+		foreach ( $this->get_enqueued( 'js' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
 
 			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
@@ -75,7 +83,7 @@ class Asset_Manager {
 			}
 		}
 
-		foreach ( $this->enqueued['css'] as $args ) {
+		foreach ( $this->get_enqueued( 'css' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
 
 			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
