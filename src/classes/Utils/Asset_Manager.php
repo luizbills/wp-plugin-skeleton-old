@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.1.1
  */
 
 namespace {{namespace}}\Utils;
@@ -22,8 +22,8 @@ class Asset_Manager {
 	}
 
 	public function register_hooks () {
-		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets_in_frontend' ] );
-		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets_in_admin' ] );
+		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 	}
 
 	public function add ( $source, $args = [] ) {
@@ -65,9 +65,11 @@ class Asset_Manager {
 		return $this->global_dependencies[ $type ];
 	}
 
-	public function enqueue_assets_in_frontend () {
+	public function enqueue_assets () {
+		$in_admin = is_admin();
+
 		foreach ( $this->enqueued['js'] as $args ) {
-			if ( $args['in_admin'] ) continue;
+			if ( $in_admin !== $args['in_admin'] ) continue;
 
 			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
 				\wp_enqueue_script(
@@ -81,37 +83,7 @@ class Asset_Manager {
 		}
 
 		foreach ( $this->enqueued['css'] as $args ) {
-			if ( $args['in_admin'] ) continue;
-
-			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
-				\wp_enqueue_style(
-					$args['handle'],
-					$args['src'],
-					$args['deps'],
-					$args['version'],
-					$args['media']
-				);
-			}
-		}
-	}
-
-	public function enqueue_assets_in_admin () {
-		foreach ( $this->enqueued['js'] as $args ) {
-			if ( ! $args['in_admin'] ) continue;
-
-			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
-				\wp_enqueue_script(
-					$args['handle'],
-					$args['src'],
-					$args['deps'],
-					$args['version'],
-					$args['in_footer']
-				);
-			}
-		}
-
-		foreach ( $this->enqueued['css'] as $args ) {
-			if ( ! $args['in_admin'] ) continue;
+			if ( $in_admin !== $args['in_admin'] ) continue;
 
 			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
 				\wp_enqueue_style(
