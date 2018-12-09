@@ -20,5 +20,5 @@ cd /path/to/your/wp-content/plugins/wp-plugin-skeleton
 php bin/install --test
 ```
 
-- Then, open your WordPress admin panel and active the **`A Skeleton Test`** plugin.
+- Then, open your WordPress admin panel and active the **`Skeleton Dev Plugin`** plugin.
 - When you when you are ready, create a Pull Request with all details.

@@ -17,12 +17,12 @@ $prompts = [
 if ( $is_test ) {
 	$ready = true;
 	$values = [
-		'Plugin Name' => 'A Skeleton Test',
-		'Plugin Description' => 'Use this plugin to test the wp-plugin-skeleton base',
+		'Plugin Name' => 'Skeleton Dev Plugin',
+		'Plugin Description' => 'Use this plugin to test the wp-plugin-skeleton boilerplate',
 		'Plugin Author' => 'An Awesome Contribuitor',
 		'Plugin Author URL' => 'https://github.com/luizbills/wp-plugin-skeleton',
-		'Plugin Text Domain' => 'a-skeleton-test',
-		'PHP Namespace' => 'Skeleton\Plugin',
+		'Plugin Text Domain' => 'skeleton-dev-plugin',
+		'PHP Namespace' => 'Skeleton\DevPlugin',
 	];
 }
 
