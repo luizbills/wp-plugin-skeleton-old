@@ -1,14 +1,11 @@
 <?php
-/**
- * @version 1.0.0
- */
 
 namespace {{namespace}};
 
 use function {{namespace}}\functions\config_get;
 use function {{namespace}}\functions\config_set;
 use function {{namespace}}\functions\get_asset_url;
-use {{namespace}}\Utils\Script_Manager;
+use {{namespace}}\Utils\Asset_Manager;
 
 $prefix = config_get( 'PREFIX' );
 
@@ -21,7 +18,19 @@ $demo = config_set( '$demo', new Demo() );
 $demo->add_action( 'admin_notices', 'display_admin_notice' );
 
 // another example: how to enqueue javascript and css
-$script_manager = config_set( '$script_manager', new Script_Manager() );
-$script_manager->add_global_script_dependency( 'jquery' );
-$script_manager->enqueue_script( get_asset_url( 'js/demo.js' ) );
-$script_manager->enqueue_style( get_asset_url( 'css/demo.css' ) );
+$assets = config_set( '$assets', new Asset_Manager() );
+
+// add your JavaScript and CSS assets
+$assets->add( get_asset_url( 'js/demo.js' ), [
+	'in_admin' => true, // enqueue in admin
+] );
+$assets->add( get_asset_url( 'css/demo.css' ), [
+	'in_admin' => false, // enqueue in frontend (default)
+] );
+// for more options see: classes/Uitls/Asset_Manager->get_defaults();
+
+// optional: add your JavaScript or CSS requirements
+// $assets->add_global_dependency( 'jquery', 'js' );
+
+// hook your assets
+$assets->register_hooks();

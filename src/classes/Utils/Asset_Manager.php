@@ -1,0 +1,122 @@
+<?php
+/**
+ * @version 1.0.0
+ */
+
+namespace {{namespace}}\Utils;
+
+use function {{namespace}}\functions\get_asset_url;
+use function {{namespace}}\functions\config_get;
+use function {{namespace}}\functions\get_file_extension;
+
+class Asset_Manager {
+
+	protected $global_dependencies = [];
+	protected $enqueued = [];
+
+	public function __construct () {
+		$this->global_dependencies['js'] = [];
+		$this->global_dependencies['css'] = [];
+		$this->enqueued['js'] = [];
+		$this->enqueued['css'] = [];
+	}
+
+	public function register_hooks () {
+		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets_in_frontend' ] );
+		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets_in_admin' ] );
+	}
+
+	public function add ( $source, $args = [] ) {
+		$type = get_file_extension( $source );
+
+		$args = \array_merge( $this->get_defaults(), $args );
+		$args['src'] = $source;
+
+		if ( empty( $args['handle'] ) ) {
+			$args['handle'] = $args['prefix'] . \basename( $args['src'], ".$type" );
+		}
+
+		if ( empty( $args['deps'] ) ) {
+			$args['deps'] = [];
+		}
+
+		$args['deps'] = \array_merge( $args['deps'], $this->global_dependencies[ $type ] );
+
+		$this->enqueued[ $type ][] = $args;
+	}
+
+	public function add_global_dependency ( $handle, $type = 'js' ) {
+		$this->global_dependencies[ $type ] = $handle;
+	}
+
+	public function enqueue_assets_in_frontend () {
+		foreach ( $this->enqueued['js'] as $args ) {
+			if ( $args['in_admin'] ) continue;
+
+			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				\wp_enqueue_script(
+					$args['handle'],
+					$args['src'],
+					$args['deps'],
+					$args['version'],
+					$args['in_footer']
+				);
+			}
+		}
+
+		foreach ( $this->enqueued['css'] as $args ) {
+			if ( $args['in_admin'] ) continue;
+
+			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				\wp_enqueue_style(
+					$args['handle'],
+					$args['src'],
+					$args['deps'],
+					$args['version'],
+					$args['media']
+				);
+			}
+		}
+	}
+
+	public function enqueue_assets_in_admin () {
+		foreach ( $this->enqueued['js'] as $args ) {
+			if ( ! $args['in_admin'] ) continue;
+
+			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				\wp_enqueue_script(
+					$args['handle'],
+					$args['src'],
+					$args['deps'],
+					$args['version'],
+					$args['in_footer']
+				);
+			}
+		}
+
+		foreach ( $this->enqueued['css'] as $args ) {
+			if ( ! $args['in_admin'] ) continue;
+
+			if ( ! \is_callable( $args['condition'] ) || \call_user_func( $args['condition'] ) ) {
+				\wp_enqueue_style(
+					$args['handle'],
+					$args['src'],
+					$args['deps'],
+					$args['version'],
+					$args['media']
+				);
+			}
+		}
+	}
+
+	public function get_defaults () {
+		return [
+			'version' => config_get( 'VERSION' ),
+			'in_footer' => true,
+			'media' => 'all',
+			'in_admin' => false,
+			'condition' => null,
+			'prefix' => config_get( 'PREFIX' ),
+		];
+	}
+}
