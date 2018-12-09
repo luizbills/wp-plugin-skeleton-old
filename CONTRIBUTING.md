@@ -21,4 +21,4 @@ php bin/install --test
 ```
 
 - Then, open your WordPress admin panel and active the **`Skeleton Dev Plugin`** plugin.
-- When you when you are ready, create a Pull Request with all details.
+- When you are ready, create a Pull Request with all details.
