@@ -14,13 +14,6 @@ class Asset_Manager {
 	protected $global_dependencies = [];
 	protected $enqueued = [];
 
-	public function __construct () {
-		$this->global_dependencies['js'] = [];
-		$this->global_dependencies['css'] = [];
-		$this->enqueued['js'] = [];
-		$this->enqueued['css'] = [];
-	}
-
 	public function register_hooks () {
 		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
