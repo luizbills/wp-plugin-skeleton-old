@@ -8,6 +8,8 @@
 
 ## Install
 
+Execute this script below in your `wp-content/plugins` to generate a new plugin boilerplate:
+
 ```
 git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
 && cd $_ \
