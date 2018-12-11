@@ -1,13 +1,14 @@
 <?php
 /**
- * @version 1.2.0
+ * @version 1.3.0
  */
 
-namespace {{namespace}}\Utils;
+namespace mitsp\Forms\Utils;
 
-use function {{namespace}}\functions\get_asset_url;
-use function {{namespace}}\functions\config_get;
-use function {{namespace}}\functions\get_file_extension;
+use function mitsp\Forms\functions\get_asset_url;
+use function mitsp\Forms\functions\config_get;
+use function mitsp\Forms\functions\get_file_extension;
+use function mitsp\Forms\functions\snake_slugify;
 
 class Asset_Manager {
 
@@ -68,6 +69,7 @@ class Asset_Manager {
 
 	public function enqueue_assets () {
 		$in_admin = is_admin();
+		$prefix = config_get( 'PREFIX' );
 
 		foreach ( $this->get_enqueued( 'js' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
@@ -80,6 +82,19 @@ class Asset_Manager {
 					$args['version'],
 					$args['in_footer']
 				);
+
+				$script_data = apply_filters( $prefix . 'localize_script_data', [], $args );
+
+				if ( ! empty( $script_data ) ) {
+					$script_data_name = snake_slugify( $args['handle'] ) . '_ajax_data';
+					$script_data_name = apply_filters( $prefix . 'localize_script_name', $script_data_name, $args );
+
+					\wp_localize_script(
+						$args['handle'],
+						$script_data_name,
+						$script_data
+					);
+				}
 			}
 		}
 
