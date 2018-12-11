@@ -56,7 +56,7 @@ final class Plugin {
 	}
 
 	public function load_plugin_textdomain () {
-		\load_plugin_textdomain( '{{plugin_text_domain}}', false, \dirname( \plugin_basename( config_get('FILE') ) ) . '/languages/' );
+		\load_plugin_textdomain( '{{plugin_text_domain}}', false, \dirname( \plugin_basename( config_get( 'MAIN_FILE' ) ) ) . '/languages/' );
 	}
 
 	public function register_init_hook ( $callback, $priority = 10 ) {
