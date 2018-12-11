@@ -46,6 +46,8 @@ class Config {
 	public static function get ( $key, $default = null ) {
 		if ( self::get_options()->has( $key ) ) {
 			return self::get_options()->get( $key );
+		} elseif ( null === $default ) {
+			throw new Exception("not found \"$key\""); 
 		}
 		return $default;
 	}
