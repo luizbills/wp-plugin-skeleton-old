@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.0.2
  */
 
 namespace {{namespace}}\functions;
@@ -19,5 +19,5 @@ function create_path ( $path ) {
 }
 
 function get_asset_url ( $file_path ) {
-	return \plugins_url( config_get( 'ASSETS_DIR' ) . '/' . $file_path, config_get('FILE') );
+	return \plugins_url( config_get( 'ASSETS_DIR' ) . '/' . $file_path, config_get('MAIN_FILE') );
 }
