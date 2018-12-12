@@ -1,22 +1,28 @@
 <?php
 /**
- * @version 2.0.1
+ * An safe and simple template engine (only replacement of variables)
+ * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
+ *
+ * @version 2.1.0
  */
 
 namespace {{namespace}}\functions;
 
-function get_template ( $template_path, $data = [] ) {
-	$template_path = config_get( 'ROOT_DIR' ) . '/' . config_get( 'TEMPLATES_DIR' ) . '/' . $template_path;
+function render_template ( $template_path, $data = [], $echo = false ) {
+	$template_base_path = config_get( 'ROOT_DIR' ) . '/' . config_get( 'TEMPLATES_DIR' );
+	$template_path =  "$template_base_path/$template_path";
 	$template_string = \file_get_contents( $template_path );
-	return render_template_string( $template_string, $data );
+	$result = render_template_string( $template_string, $data );
+	if ( $echo ) {
+		echo $result;
+	}
+	return $result;
 }
 
 function include_template ( $template_path, $data = [] ) {
-	echo get_template( $template_path, $data );
+	render_template( $template_path, $data, true );
 }
 
-// An safe and simple template engine
-// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
 function render_template_string ( $string, $data = [] ) {
 	$result = $string;
 	$matches = null;
