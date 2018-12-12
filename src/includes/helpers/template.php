@@ -1,6 +1,6 @@
 <?php
 /**
- * An safe and simple template engine
+ * An safe and simple template engine (only replacement of variables)
  * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
  *
  * @version 2.1.0
@@ -13,7 +13,6 @@ function render_template ( $template_path, $data = [], $echo = false ) {
 	$template_path =  "$template_base_path/$template_path";
 	$template_string = \file_get_contents( $template_path );
 	$result = render_template_string( $template_string, $data );
-	
 	if ( $echo ) {
 		echo $result;
 	}
