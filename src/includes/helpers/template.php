@@ -3,7 +3,7 @@
  * An safe and simple template engine (only replacement of variables)
  * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
  *
- * @version 2.1.0
+ * @version 2.2.0
  */
 
 namespace {{namespace}}\functions;
@@ -34,7 +34,18 @@ function render_template_string ( $string, $data = [] ) {
 		foreach ( $matches[0] as $index => $variable ) {
 			$key = trim( $matches[1][ $index ] );
 			$find[] = $variable;
-			$replace[] = isset( $data[ $key ] ) ? esc_html( $data[ $key ] ) : '';
+			$escape = '!' !== $key[0];
+
+			if ( ! $escape ) {
+				$key[0] = ' ';
+				$key = trim( $key );
+			}
+
+			if ( isset( $data[ $key ] ) ) {
+				$replace[] = $escape ? esc_html( $data[ $key ] ) : $data[ $key ];
+			} else {
+				$replace[] = '';
+			}
 		}
 	}
 
