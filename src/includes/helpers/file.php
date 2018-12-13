@@ -12,10 +12,11 @@ function get_file_extension ( $path ) {
 }
 
 function create_path ( $path ) {
-	if ( ! \wp_mkdir_p( $path ) ) {
+	$result = \wp_mkdir_p( $path );
+	if ( ! $result ) {
 		throw new \Exception( "could not create $path" );
 	}
-	return false;
+	return $result;
 }
 
 function get_asset_url ( $file_path ) {
