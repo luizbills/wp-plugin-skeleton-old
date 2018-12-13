@@ -1,3 +1,3 @@
 <div class="notice {{ class }}">
-	<p>{{ message }}</p>
+	<p>{{ !message }}</p>
 </div>
