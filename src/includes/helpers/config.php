@@ -14,3 +14,7 @@ function config_set ( $key, $value ) {
 function config_get ( $key, $default = null ) {
 	return Config::get( $key, $default );
 }
+
+function prefix ( $string ) {
+	return Config::get( 'PREFIX' ) . $string;
+}
