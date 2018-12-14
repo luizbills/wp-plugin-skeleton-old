@@ -7,8 +7,7 @@ namespace {{namespace}}\Core;
 
 use Symfony\Component\Yaml\Yaml;
 use {{namespace}}\Utils\Immutable_Data_Store;
-use function {{namespace}}\functions\slugify;
-use function {{namespace}}\functions\snake_slugify;
+use {{namespace}}\functions as h;
 
 class Config {
 	protected static $options = null;
@@ -25,8 +24,8 @@ class Config {
 
 		$root = \dirname( $MAIN_FILE );
 		$plugin_config = Yaml::parseFile( $root . '/plugin.yml' );
-		$plugin_slug = slugify( $plugin_config['NAME'] );
-		$plugin_prefix = snake_slugify( $plugin_slug ) . '_';
+		$plugin_slug = h\slugify( $plugin_config['NAME'] );
+		$plugin_prefix = h\snake_slugify( $plugin_slug ) . '_';
 		$options = self::get_options();
 
 		$options->set( 'SLUG', $plugin_slug );
@@ -47,7 +46,7 @@ class Config {
 		if ( self::get_options()->has( $key ) ) {
 			return self::get_options()->get( $key );
 		} elseif ( null === $default ) {
-			throw new Exception("not found \"$key\""); 
+			throw new Exception("not found \"$key\"");
 		}
 		return $default;
 	}

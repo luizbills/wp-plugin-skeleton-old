@@ -5,13 +5,13 @@
 
 namespace {{namespace}};
 
-use function {{namespace}}\functions\config_get;
+use {{namespace}}\functions as h;
 
 class Logger extends Common\Abstract_Hooker {
 
 	public function handle_log ( $message, $type, $timestamp ) {
 		$type = \strtoupper( $type );
-		$plugin_slug = config_get( 'SLUG' );
+		$plugin_slug = h\config_get( 'SLUG' );
 
 		\error_log( "$plugin_slug.$type: $message" );
 	}

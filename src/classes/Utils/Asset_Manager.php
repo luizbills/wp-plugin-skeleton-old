@@ -5,10 +5,7 @@
 
 namespace {{namespace}}\Utils;
 
-use function {{namespace}}\functions\get_asset_url;
-use function {{namespace}}\functions\config_get;
-use function {{namespace}}\functions\get_file_extension;
-use function {{namespace}}\functions\snake_slugify;
+use {{namespace}}\functions as h;
 
 class Asset_Manager {
 
@@ -21,7 +18,7 @@ class Asset_Manager {
 	}
 
 	public function add ( $source, $args = [] ) {
-		$type = get_file_extension( $source );
+		$type = h\get_file_extension( $source );
 
 		$args = \array_merge( $this->get_defaults(), $args );
 		$args['src'] = $source;
@@ -41,7 +38,7 @@ class Asset_Manager {
 		}
 		$this->enqueued[ $type ][] = $args;
 
-		\do_action( config_get( 'PREFIX' ) . 'added_asset', $args, $type );
+		\do_action( h\config_get( 'PREFIX' ) . 'added_asset', $args, $type );
 	}
 
 	public function get_enqueued ( $type = 'js' ) {
@@ -57,7 +54,7 @@ class Asset_Manager {
 		}
 		$this->global_dependencies[ $type ][] = $handle;
 
-		\do_action( config_get( 'PREFIX' ) . 'added_global_asset_dependency', $handle );
+		\do_action( h\config_get( 'PREFIX' ) . 'added_global_asset_dependency', $handle );
 	}
 
 	public function get_global_dependencies ( $type = 'js' ) {
@@ -69,7 +66,7 @@ class Asset_Manager {
 
 	public function enqueue_assets () {
 		$in_admin = is_admin();
-		$prefix = config_get( 'PREFIX' );
+		$prefix = h\config_get( 'PREFIX' );
 
 		foreach ( $this->get_enqueued( 'js' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
@@ -86,7 +83,7 @@ class Asset_Manager {
 				$script_data = apply_filters( $prefix . 'localize_script_data', [], $args );
 
 				if ( ! empty( $script_data ) ) {
-					$script_data_name = snake_slugify( $args['handle'] ) . '_ajax_data';
+					$script_data_name = h\snake_slugify( $args['handle'] ) . '_ajax_data';
 					$script_data_name = apply_filters( $prefix . 'localize_script_name', $script_data_name, $args );
 
 					\wp_localize_script(
@@ -115,12 +112,12 @@ class Asset_Manager {
 
 	public function get_defaults () {
 		return [
-			'version' => config_get( 'VERSION' ),
+			'version' => h\config_get( 'VERSION' ),
 			'in_footer' => true,
 			'media' => 'all',
 			'in_admin' => false,
 			'condition' => null,
-			'prefix' => config_get( 'PREFIX' ),
+			'prefix' => h\config_get( 'PREFIX' ),
 		];
 	}
 }

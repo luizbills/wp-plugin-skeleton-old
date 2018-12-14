@@ -5,8 +5,7 @@
 
 namespace {{namespace}}\Core;
 
-use function {{namespace}}\functions\include_template;
-use function {{namespace}}\functions\config_get;
+use {{namespace}}\functions as h;
 
 final class Plugin {
 
@@ -56,7 +55,11 @@ final class Plugin {
 	}
 
 	public function load_plugin_textdomain () {
-		\load_plugin_textdomain( '{{plugin_text_domain}}', false, \dirname( \plugin_basename( config_get( 'MAIN_FILE' ) ) ) . '/languages/' );
+		\load_plugin_textdomain(
+			'{{plugin_text_domain}}',
+			false,
+			\dirname( \plugin_basename( h\config_get( 'MAIN_FILE' ) ) ) . '/languages/'
+		);
 	}
 
 	public function register_init_hook ( $callback, $priority = 10 ) {
@@ -68,7 +71,7 @@ final class Plugin {
 	}
 
 	protected function get_init_hook_action_name () {
-		return config_get('PREFIX') . 'plugin_init';
+		return h\config_get('PREFIX') . 'plugin_init';
 	}
 
 	public function is_active () {
@@ -80,9 +83,9 @@ final class Plugin {
 	}
 
 	public function print_missing_dependencies_error () {
-		$message = \__( 'Missing requirements for ', '{{plugin_text_domain}}' ) . config_get( 'NAME' );
+		$message = \__( 'Missing requirements for ', '{{plugin_text_domain}}' ) . h\config_get( 'NAME' );
 
-		include_template( 'admin-notice.php', [
+		h\include_template( 'admin-notice.php', [
 			'message' => $message,
 			'class' => 'error'
 		] );
