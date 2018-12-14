@@ -80,7 +80,7 @@ final class Plugin {
 	}
 
 	public function print_missing_dependencies_error () {
-		$message = \__( 'Missing requirements for ', 'mitsp-forms' ) . config_get( 'NAME' );
+		$message = \__( 'Missing requirements for ', '{{plugin_text_domain}}' ) . config_get( 'NAME' );
 
 		include_template( 'admin-notice.php', [
 			'message' => $message,
