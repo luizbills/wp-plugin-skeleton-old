@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.1
+ * @version 1.2.0
  */
 
 namespace {{namespace}}\functions;
@@ -15,6 +15,6 @@ function config_get ( $key, $default = null ) {
 	return Config::get( $key, $default );
 }
 
-function prefix ( $string ) {
+function prefix ( $string = '' ) {
 	return Config::get( 'PREFIX' ) . $string;
 }
