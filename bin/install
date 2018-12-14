@@ -131,6 +131,7 @@ $files = [
 		'config.php',
 		'file.php',
 		'logger.php',
+		'misc.php',
 		'post.php',
 		'slug.php',
 		'template.php',

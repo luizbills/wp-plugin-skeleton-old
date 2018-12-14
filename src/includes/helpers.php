@@ -1,10 +1,10 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.0
  */
 
-// include Config helpers first
 require_once 'helpers/config.php';
+require_once 'helpers/misc.php';
 
 require_once 'helpers/cache.php';
 require_once 'helpers/file.php';

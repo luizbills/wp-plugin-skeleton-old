@@ -1,16 +1,16 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.0.1
  */
 
 namespace {{namespace}}\Utils;
 
+use {{namespace}}\functions as h;
+
 class Immutable_Data_Store extends Data_Store {
 
 	public function set ( $key, $value ) {
-		if ( $this->has( $key ) ) {
-			throw new \Exception( "key \"$key\" already assigned" );
-		}
+		h\throw_if( $this->has( $key ), \Exception::class, "key \"$key\" already assigned" );
 		return parent::set( $key, $value );
 	}
 

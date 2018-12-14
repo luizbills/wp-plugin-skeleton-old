@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.0
+ * @version 2.1.1
  */
 
 namespace {{namespace}}\Core;
@@ -45,9 +45,8 @@ class Config {
 	public static function get ( $key, $default = null ) {
 		if ( self::get_options()->has( $key ) ) {
 			return self::get_options()->get( $key );
-		} elseif ( null === $default ) {
-			throw new Exception("not found \"$key\"");
 		}
+		h\throw_if( null === $default, \Exception::class, "not found \"$key\"" );
 		return $default;
 	}
 }
