@@ -107,7 +107,7 @@ $files = [
 	],
 	'classes' => [
 		'Demo.php',
-		'Logger.php',
+		'Simple_Logger_Handler.php',
 	],
 	'classes/Core' => [
 		'Config.php',

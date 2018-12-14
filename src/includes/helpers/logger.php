@@ -1,16 +1,20 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 namespace {{namespace}}\functions;
+
+function log_debug () {
+	_log( \func_get_args(), 'debug' );
+}
 
 function log_info () {
 	_log( \func_get_args(), 'info' );
 }
 
-function log_debug () {
-	_log( \func_get_args(), 'debug' );
+function log_warn () {
+	_log( \func_get_args(), 'warning' );
 }
 
 function log_error () {
@@ -26,12 +30,16 @@ function _handle_log ( $message, $type, $timestamp ) {
 	\do_action( prefix( 'handle_log' ), $message, $type, $timestamp );
 }
 
-function _is_logger_enabled () {
-	return \apply_filters( prefix( 'is_logger_enabled' ), false );
+function enable_logger () {
+	\add_filter( prefix( 'logger_enabled' ), '_return_true', 100 );
+}
+
+function disable_logger () {
+	\add_filter( prefix( 'logger_enabled' ), '_return_false', 100 );
 }
 
 function _log ( $args, $type ) {
-	if ( ! _is_logger_enabled() ) return;
+	$is_enabled = \apply_filters( prefix( 'logger_enabled' ), true, $type );
 
 	$args = \is_array( $args ) ? $args : [ $args ];
 	$message = '';
@@ -49,5 +57,6 @@ function _log ( $args, $type ) {
 		}
 		$message .= ' ';
 	}
+
 	_handle_log( $message, $type, \time() );
 }
