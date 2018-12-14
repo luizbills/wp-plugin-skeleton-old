@@ -3,12 +3,12 @@
  * @version 1.3.0
  */
 
-namespace mitsp\Forms\Utils;
+namespace {{namespace}}\Utils;
 
-use function mitsp\Forms\functions\get_asset_url;
-use function mitsp\Forms\functions\config_get;
-use function mitsp\Forms\functions\get_file_extension;
-use function mitsp\Forms\functions\snake_slugify;
+use function {{namespace}}\functions\get_asset_url;
+use function {{namespace}}\functions\config_get;
+use function {{namespace}}\functions\get_file_extension;
+use function {{namespace}}\functions\snake_slugify;
 
 class Asset_Manager {
 
