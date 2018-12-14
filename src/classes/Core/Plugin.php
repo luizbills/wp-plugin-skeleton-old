@@ -51,7 +51,7 @@ final class Plugin {
 	}
 
 	protected function _includes () {
-		require_once config_get( 'ROOT_DIR' ) . '/includes/index.php';
+		require_once h\config_get( 'ROOT_DIR' ) . '/includes/index.php';
 	}
 
 	public function load_plugin_textdomain () {
