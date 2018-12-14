@@ -5,7 +5,7 @@ namespace {{namespace}};
 use {{namespace}}\functions as h;
 use {{namespace}}\Utils\Asset_Manager;
 
-$prefix = h\config_get( 'PREFIX' );
+$prefix = h\prefix();
 
 // examples: how to hook your plugins actions and filters
 $logger = h\config_set( '$logger', new Logger() );

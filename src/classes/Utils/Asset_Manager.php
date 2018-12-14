@@ -38,7 +38,7 @@ class Asset_Manager {
 		}
 		$this->enqueued[ $type ][] = $args;
 
-		\do_action( h\config_get( 'PREFIX' ) . 'added_asset', $args, $type );
+		\do_action( h\prefix( 'added_asset' ), $args, $type );
 	}
 
 	public function get_enqueued ( $type = 'js' ) {
@@ -54,7 +54,7 @@ class Asset_Manager {
 		}
 		$this->global_dependencies[ $type ][] = $handle;
 
-		\do_action( h\config_get( 'PREFIX' ) . 'added_global_asset_dependency', $handle );
+		\do_action( h\prefix( 'added_global_asset_dependency' ), $handle );
 	}
 
 	public function get_global_dependencies ( $type = 'js' ) {
@@ -66,7 +66,6 @@ class Asset_Manager {
 
 	public function enqueue_assets () {
 		$in_admin = is_admin();
-		$prefix = h\config_get( 'PREFIX' );
 
 		foreach ( $this->get_enqueued( 'js' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
@@ -80,11 +79,11 @@ class Asset_Manager {
 					$args['in_footer']
 				);
 
-				$script_data = apply_filters( $prefix . 'localize_script_data', [], $args );
+				$script_data = \apply_filters( h\prefix( 'localize_script_data' ), [], $args );
 
 				if ( ! empty( $script_data ) ) {
 					$script_data_name = h\snake_slugify( $args['handle'] ) . '_ajax_data';
-					$script_data_name = apply_filters( $prefix . 'localize_script_name', $script_data_name, $args );
+					$script_data_name = \apply_filters( h\prefix( 'localize_script_name' ), $script_data_name, $args );
 
 					\wp_localize_script(
 						$args['handle'],
@@ -117,7 +116,7 @@ class Asset_Manager {
 			'media' => 'all',
 			'in_admin' => false,
 			'condition' => null,
-			'prefix' => h\config_get( 'PREFIX' ),
+			'prefix' => h\prefix(),
 		];
 	}
 }

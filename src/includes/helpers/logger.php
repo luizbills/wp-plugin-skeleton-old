@@ -23,11 +23,11 @@ function log_error () {
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/includes/hooks.php
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Logger.php
 function _handle_log ( $message, $type, $timestamp ) {
-	\do_action( config_get( 'PREFIX' ) . 'handle_log', $message, $type, $timestamp );
+	\do_action( prefix( 'handle_log' ), $message, $type, $timestamp );
 }
 
 function _is_logger_enabled () {
-	return \apply_filters( config_get( 'PREFIX' ) . 'is_logger_enabled', false );
+	return \apply_filters( prefix( 'is_logger_enabled' ), false );
 }
 
 function _log ( $args, $type ) {
