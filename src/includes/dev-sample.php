@@ -1,8 +1,7 @@
 <?php
-/**
- * @version 1.0.0
- */
 
-namespace {{namespace}}\functions;
+namespace {{namespace}};
+
+use {{namespace}}\functions as h;
 
 log_debug( 'Testing... works?' );
