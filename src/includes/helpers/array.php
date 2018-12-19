@@ -28,6 +28,6 @@ function array_tail ( $arr ) {
 	return \array_slice( $arr, 1 );
 }
 
-function divide ( $arr ) {
+function array_divide ( $arr ) {
 	return [ \array_keys( $arr ), \array_values( $arr ) ];
 }
