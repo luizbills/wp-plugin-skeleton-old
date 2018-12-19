@@ -25,5 +25,9 @@ function array_head ( $arr ) {
 }
 
 function array_tail ( $arr ) {
-	return array_slice( $arr, 1 );
+	return \array_slice( $arr, 1 );
+}
+
+function divide ( $arr ) {
+	return [ \array_keys( $arr ), \array_values( $arr ) ];
 }
