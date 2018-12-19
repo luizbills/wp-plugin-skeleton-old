@@ -134,6 +134,7 @@ $files = [
 		'misc.php',
 		'post.php',
 		'slug.php',
+		'string.php',
 		'template.php',
 		'user.php',
 	],
