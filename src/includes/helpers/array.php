@@ -13,7 +13,7 @@ function array_unset_keys ( &$arr, $keys ) {
 
 function array_extract_key ( &$arr, $key ) {
 	$value = null;
-	if ( ! isset( $arr[ $key ] ) ) {
+	if ( isset( $arr[ $key ] ) ) {
 		$value = $arr[ $key ];
 		unset( $arr[ $key ] );
 	}
