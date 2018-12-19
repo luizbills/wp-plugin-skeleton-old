@@ -19,3 +19,11 @@ function array_extract_key ( &$arr, $key ) {
 	}
 	return $value;
 }
+
+function array_head ( $arr ) {
+	return $arr[0]
+}
+
+function array_tail ( $arr ) {
+	return array_slice( $arr, 1 );
+}
