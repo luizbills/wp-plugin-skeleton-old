@@ -6,7 +6,7 @@
 namespace {{namespace}}\functions;
 
 function array_head ( $arr ) {
-	return $arr[0]
+	return \reset( $arr );
 }
 
 function array_tail ( $arr ) {
