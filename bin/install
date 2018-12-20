@@ -90,6 +90,7 @@ $replace = [
 // list of files and folders
 $files = [
 	'' => [
+		'.editorconfig',
 		'.gitignore',
 		'composer.json',
 		'LICENSE',
