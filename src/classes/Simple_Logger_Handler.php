@@ -9,6 +9,10 @@ use {{namespace}}\functions as h;
 
 class Simple_Logger_Handler extends Common\Abstract_Hooker {
 
+	public function add_hooks () {
+		$this->add_action( h\prefix( 'handle_log' ), 'handle_log', 10, 3 );
+	}
+
 	public function handle_log ( $message, $type, $timestamp ) {
 		if ( ! $this->is_enabled() ) return;
 

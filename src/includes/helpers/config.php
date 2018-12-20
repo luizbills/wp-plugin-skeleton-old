@@ -24,6 +24,7 @@ function assets ( $string = '' ) {
 	$assets = Config::get( '$assets', false );
 	if ( false === $assets ) {
 		$assets = Config::set( '$assets', new Asset_Manager() );
+		$assets->add_hooks();
 	}
 	return $assets;
 }

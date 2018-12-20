@@ -5,16 +5,17 @@
 
 namespace {{namespace}}\Utils;
 
+use {{namespace}}\Common\Abstract_Hooker;
 use {{namespace}}\functions as h;
 
-class Asset_Manager {
+class Asset_Manager extends Abstract_Hooker {
 
 	protected $global_dependencies = [];
 	protected $enqueued = [];
 
-	public function register_hooks () {
-		\add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-		\add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+	public function add_hooks () {
+		$this->add_action( 'wp_enqueue_scripts', 'enqueue_assets' );
+		$this->add_action( 'admin_enqueue_scripts', 'enqueue_assets' );
 	}
 
 	public function add ( $source, $args = [] ) {

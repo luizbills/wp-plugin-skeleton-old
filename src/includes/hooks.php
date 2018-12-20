@@ -6,10 +6,10 @@ use {{namespace}}\functions as h;
 
 // examples: how to hook your plugins actions and filters
 $logger_handler = h\config_set( '$logger_handler', new Simple_Logger_Handler() );
-$logger_handler->add_action( h\prefix( 'handle_log' ), 'handle_log', 10, 3 );
+$logger_handler->add_hooks();
 
 $demo = h\config_set( '$demo', new Demo() );
-$demo->add_action( 'admin_notices', 'display_admin_notice' );
+$demo->add_hooks();
 
 // another example: how to enqueue javascript and css
 $assets = h\assets(); // this returns a classes/Uitls/Asset_Manager instance
@@ -25,6 +25,3 @@ $assets->add( h\get_asset_url( 'css/demo.css' ), [
 
 // optional: add your JavaScript or CSS requirements
 // $assets->add_global_dependency( 'jquery', 'js' );
-
-// hook your assets
-$assets->register_hooks();

@@ -9,6 +9,10 @@ use {{namespace}}\functions as h;
 
 class Demo extends Common\Abstract_Hooker {
 
+	public function add_hooks () {
+		$this->add_action( 'admin_notices', 'display_admin_notice' );
+	}
+
 	public function display_admin_notice () {
 		$plugin_name = h\config_get( 'NAME' );
 
