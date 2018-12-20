@@ -40,8 +40,8 @@ function array_forget ( &$arr, $keys ) {
 	return $arr;
 }
 
-function array_only ( &$arr, $keys ) {
-    return \array_intersect_key( $arr, \array_flip( (array) $keys ) );
+function array_only ( $arr, $keys ) {
+	return \array_intersect_key( $arr, \array_flip( (array) $keys ) );
 }
 
 function wrap ( $value ) {
