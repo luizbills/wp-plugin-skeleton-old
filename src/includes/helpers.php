@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.1.0
+ * @version 1.3.0
  */
 
 require_once 'helpers/config.php';
@@ -12,5 +12,6 @@ require_once 'helpers/file.php';
 require_once 'helpers/logger.php';
 require_once 'helpers/post.php';
 require_once 'helpers/slug.php';
+require_once 'helpers/string.php';
 require_once 'helpers/template.php';
 require_once 'helpers/user.php';
