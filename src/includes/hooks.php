@@ -12,7 +12,7 @@ $demo = h\config_set( '$demo', new Demo() );
 $demo->add_action( 'admin_notices', 'display_admin_notice' );
 
 // another example: how to enqueue javascript and css
-$assets = h\config_set( '$assets', new Utils\Asset_Manager() );
+$assets = h\assets(); // this returns a classes/Uitls/Asset_Manager instance
 
 // add your JavaScript and CSS assets
 $assets->add( h\get_asset_url( 'js/demo.js' ), [
