@@ -9,8 +9,6 @@ use {{namespace}}\functions as h;
 
 final class Plugin {
 
-	const HAS_DEPENDENCIES = false;
-
 	protected $_actived = false;
 	protected static $_instance = null;
 
@@ -38,7 +36,7 @@ final class Plugin {
 
 		\add_action( 'init', [ $this, 'load_plugin_textdomain' ], 0 );
 
-		if ( self::HAS_DEPENDENCIES && ! $this->check_dependencies() ) {
+		if ( $this->has_dependencies() && ! $this->check_dependencies() ) {
 			\add_action( 'admin_notices', [ $this, 'print_missing_dependencies_error' ] );
 			return;
 		}
@@ -77,16 +75,20 @@ final class Plugin {
 	public function is_active () {
 		return $this->_actived;
 	}
-
-	protected function check_dependencies () {
-		return false;
+	
+	public function has_dependencies () {
+		return \apply_filters( h\prefix( 'has_dependencies' ), false ); 
+	}
+	
+	public function check_dependencies () {
+		return \apply_filters( h\prefix( 'check_dependencies' ), false ); 
 	}
 
 	public function print_missing_dependencies_error () {
 		$message = \__( 'Missing requirements for ', '{{plugin_text_domain}}' ) . h\config_get( 'NAME' );
-
+		
 		h\include_template( 'admin-notice.php', [
-			'message' => $message,
+			'message' => \apply_filters( h\prefix( 'missing_dependencies_error_message' ), $message ),
 			'class' => 'error'
 		] );
 	}
