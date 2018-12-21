@@ -109,6 +109,7 @@ $files = [
 	'classes' => [
 		'Demo.php',
 		'Simple_Logger_Handler.php',
+		'Plugin_Dependencies.php',
 	],
 	'classes/Core' => [
 		'Config.php',
@@ -123,6 +124,7 @@ $files = [
 		'Abstract_Hooker.php',
 	],
 	'includes' => [
+		'boot.php',
 		'helpers.php',
 		'hooks.php',
 		'index.php',
