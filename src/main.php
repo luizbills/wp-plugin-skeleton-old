@@ -19,4 +19,7 @@ require_once 'vendor/autoload.php';
 require_once 'includes/helpers.php';
 
 {{namespace}}\Core\Config::setup( __FILE__ );
+
+require_once 'includes/boot.php';
+
 {{namespace}}\Core\Plugin::run();

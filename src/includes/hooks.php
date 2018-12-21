@@ -5,9 +5,6 @@ namespace {{namespace}};
 use {{namespace}}\functions as h;
 
 // examples: how to hook your plugins actions and filters
-$logger_handler = h\config_set( '$logger_handler', new Simple_Logger_Handler() );
-$logger_handler->add_hooks();
-
 $demo = h\config_set( '$demo', new Demo() );
 $demo->add_hooks();
 
