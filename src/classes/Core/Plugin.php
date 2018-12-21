@@ -71,7 +71,7 @@ final class Plugin {
 	}
 
 	protected function get_init_hook_action_name () {
-		return h\config_get('PREFIX') . 'plugin_init';
+		return h\prefix( 'plugin_init' );
 	}
 
 	public function is_active () {
@@ -92,10 +92,10 @@ final class Plugin {
 	}
 
 	public function __clone () {
-		\_doing_it_wrong( __FUNCTION__, 'Cloning is forbidden.', '1.0.0' );
+		\_doing_it_wrong( __FUNCTION__, 'Cloning is forbidden.', h\config_get( 'VERSION' ) );
 	}
 
 	public function __wakeup () {
-		\_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', '1.0.0' );
+		\_doing_it_wrong( __FUNCTION__, 'Unserializing instances of this class is forbidden.', h\config_get( 'VERSION' ) );
 	}
 }
