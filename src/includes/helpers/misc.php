@@ -7,7 +7,7 @@ namespace {{namespace}}\functions;
 
 function value ( $value, $default = '' ) {
 	$result = is_callable( $value ) ? $value() : $value;
-	return empty( $value ) ? $default : $value;
+	return empty( $result ) ? $default : $result;
 }
 
 function throw_if ( $condition, $exception, ...$parameters ) {
