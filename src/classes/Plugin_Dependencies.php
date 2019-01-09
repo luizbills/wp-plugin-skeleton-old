@@ -18,8 +18,7 @@ class Plugin_Dependencies extends Common\Abstract_Hooker {
 	}
 
 	public function has_dependencies ( $result ) {
-		$result = true;
-		return $result;
+		return true;
 	}
 
 	public function check_dependencies ( $result ) {
