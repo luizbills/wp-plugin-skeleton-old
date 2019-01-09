@@ -1,12 +1,12 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.0.2
  */
 
 namespace {{namespace}}\functions;
 
 function value ( $value, $default = '' ) {
-	$result = is_callable( $value ) ? $value() : $value;
+	$result = is_callable( $value ) ? call_user_func( $value ) : $value;
 	return empty( $result ) ? $default : $result;
 }
 
