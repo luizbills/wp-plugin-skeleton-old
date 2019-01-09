@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.3.1
+ * @version 2.0.0
  */
 
 namespace {{namespace}}\Utils;
@@ -56,6 +56,8 @@ class Asset_Manager extends Abstract_Hooker {
 		$this->global_dependencies[ $type ][] = $handle;
 
 		\do_action( h\prefix( 'added_global_asset_dependency' ), $handle );
+
+		h\log_info( 'Added global ' . strtoupper( $type ) . ' dependency: handle=' . $args['handle'] . ' src=' . $args['src'] );
 	}
 
 	public function get_global_dependencies ( $type = 'js' ) {
@@ -80,11 +82,13 @@ class Asset_Manager extends Abstract_Hooker {
 					$args['in_footer']
 				);
 
-				$script_data = \apply_filters( h\prefix( 'localize_script_data' ), [], $args );
+				h\log_info( 'Enqueued JS: handle=' . $args['handle'] . ' src=' . $args['src'] );
+
+				$script_data = $args['script_data'];
 
 				if ( ! empty( $script_data ) ) {
-					$script_data_name = h\snake_slugify( $args['handle'] ) . '_ajax_data';
-					$script_data_name = \apply_filters( h\prefix( 'localize_script_name' ), $script_data_name, $args );
+					$script_data_name = h\snake_slugify( $args['handle'] ) . '_script_data';
+					$script_data_name = \apply_filters( h\prefix( 'script_data_js_var' ), $script_data_name, $args );
 
 					\wp_localize_script(
 						$args['handle'],
@@ -107,6 +111,8 @@ class Asset_Manager extends Abstract_Hooker {
 					$args['media']
 				);
 			}
+
+			h\log_info( 'Enqueued CSS: handle=' . $args['handle'] . ' src=' . $args['src'] );
 		}
 	}
 
