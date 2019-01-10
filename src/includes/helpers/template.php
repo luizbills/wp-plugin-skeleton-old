@@ -1,26 +1,29 @@
 <?php
 /**
- * An safe and simple template engine (only replacement of variables)
- * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
+ * An safe and simple template engine (only replacement of variables
+ * use {{ var }} to safe/scaped values and {{ !var }} to non-scaped values.
  *
- * @version 2.2.0
+ * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
+ * 
+ * @version 2.3.0
  */
 
 namespace {{namespace}}\functions;
+
+function include_template ( $template_path, $data = [] ) {
+	render_template( $template_path, $data, true );
+}
 
 function render_template ( $template_path, $data = [], $echo = false ) {
 	$template_base_path = config_get( 'ROOT_DIR' ) . '/' . config_get( 'TEMPLATES_DIR' );
 	$template_path =  "$template_base_path/$template_path";
 	$template_string = \file_get_contents( $template_path );
+	$data = apply_filters( prefix( 'template_default_data' ), $data );
 	$result = render_template_string( $template_string, $data );
 	if ( $echo ) {
 		echo $result;
 	}
 	return $result;
-}
-
-function include_template ( $template_path, $data = [] ) {
-	render_template( $template_path, $data, true );
 }
 
 function render_template_string ( $string, $data = [] ) {
