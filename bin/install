@@ -110,6 +110,7 @@ $files = [
 		'Demo.php',
 		'Simple_Logger_Handler.php',
 		'Plugin_Dependencies.php',
+		'_Base.php',
 	],
 	'classes/Core' => [
 		'Config.php',
