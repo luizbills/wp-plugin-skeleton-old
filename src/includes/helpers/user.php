@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 namespace {{namespace}}\functions;
@@ -15,4 +15,8 @@ function user_has_role ( $role, $user_id = null ) {
 		return \in_array( $role, (array) $user->roles ) || \user_can( $user_id, $role );
 	}
 	return false;
+}
+
+function user_is_admin ( $user_id = null ) {
+	return user_has_role( 'administrator', $user_id );
 }
