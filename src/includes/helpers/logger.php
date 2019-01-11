@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.1.0
+ * @version 2.1.1
  */
 
 namespace {{namespace}}\functions;
@@ -24,8 +24,7 @@ function log_error () {
 /* Internal Helpers */
 
 // You can create your own log handler
-// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/includes/hooks.php
-// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Logger.php
+// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Simple_Logger_Handler.php
 function _handle_log ( $message, $type, $timestamp ) {
 	\do_action( prefix( 'handle_log' ), $message, $type, $timestamp );
 }
