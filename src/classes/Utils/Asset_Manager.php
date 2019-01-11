@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 namespace {{namespace}}\Utils;
@@ -69,6 +69,7 @@ class Asset_Manager extends Abstract_Hooker {
 
 	public function enqueue_assets () {
 		$in_admin = is_admin();
+		$context = $in_admin ? 'admin' : 'frontend';
 
 		foreach ( $this->get_enqueued( 'js' ) as $args ) {
 			if ( $in_admin !== $args['in_admin'] ) continue;
@@ -82,7 +83,7 @@ class Asset_Manager extends Abstract_Hooker {
 					$args['in_footer']
 				);
 
-				h\log_info( 'Enqueued JS: handle=' . $args['handle'] . ' src=' . $args['src'] );
+				h\log_info( "Enqueued JS ($context): handle=" . $args['handle'] . ' src=' . $args['src'] );
 
 				$script_data = $args['script_data'];
 
@@ -112,7 +113,7 @@ class Asset_Manager extends Abstract_Hooker {
 				);
 			}
 
-			h\log_info( 'Enqueued CSS: handle=' . $args['handle'] . ' src=' . $args['src'] );
+			h\log_info( "Enqueued CSS ($context): handle=" . $args['handle'] . ' src=' . $args['src'] );
 		}
 	}
 
@@ -124,6 +125,7 @@ class Asset_Manager extends Abstract_Hooker {
 			'in_admin' => false,
 			'condition' => null,
 			'prefix' => h\prefix(),
+			'script_data' => null
 		];
 	}
 }
