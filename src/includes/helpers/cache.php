@@ -8,21 +8,26 @@
 namespace {{namespace}}\functions;
 
 function remember_cache ( $key, $callback, $expire = 0 ) {
-	$cached = get_transient( $key );
+	if ( \apply_filters( prefix( 'remember_cache_disabled' ), false, $key ) ) {
+		log_info( "function remember_cache disabled for $key" );
+		return $callback();
+	}
+
+	$cached = \get_transient( $key );
 	if ( false !== $cached ) {
 		return $cached;
 	}
 	$value = $callback();
-	if ( ! is_wp_error( $value ) ) {
-		set_transient( $key, $value, $expire );
+	if ( ! \is_wp_error( $value ) ) {
+		\set_transient( $key, $value, $expire );
 	}
 	return $value;
 }
 
 function forget_cache ( $key, $default = null ) {
-	$cached = get_transient( $key );
+	$cached = \get_transient( $key );
 	if ( false !== $cached ) {
-		delete_transient( $key );
+		\delete_transient( $key );
 		return $cached;
 	}
 	return $default;
