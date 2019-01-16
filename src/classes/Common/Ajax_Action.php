@@ -5,7 +5,7 @@
 
 namespace {{namespace}}\Common;
 
-abstract class Ajax_Action extends Abstract_Hooker {
+abstract class Abstract_Ajax_Action extends Abstract_Hooker {
 	public function add_hooks () {
 		$this->add_action( 'wp_ajax_' . $this->get_action_name(), 'callback' );
 		
