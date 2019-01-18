@@ -123,6 +123,7 @@ $files = [
 	],
 	'classes/Common' => [
 		'Abstract_Hooker.php',
+		'Abstract_Ajax_Action.php',
 	],
 	'includes' => [
 		'boot.php',
