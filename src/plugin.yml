@@ -8,6 +8,8 @@ ASSETS_DIR: 'assets'
 TEMPLATES_DIR: 'templates'
 TEXT_DOMAIN: '{{plugin_text_domain}}'
 
+BOILERPLATE_VERSION: '1.0.0' #delete this if you prefer
+
 # declare other values that you want
 
 # important: don't use reserved keys (they're used internally)
