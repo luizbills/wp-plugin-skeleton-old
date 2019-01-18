@@ -14,20 +14,9 @@ abstract class Abstract_Ajax_Action extends Abstract_Hooker {
 		}
 	}
 
-	public function callback () {
-		// this should be implemented
-		\wp_send_json_error(
-			[
-				'error' => 'Callback not implemented'
-			],
-			400
-		);
-	}
+	abstract public function get_action_name ();
 	
-	public function get_action_name () {
-		// this should be implemented
-		return '';
-	}
+	abstract public function callback ();
 	
 	public function is_public () {
 		return false;
