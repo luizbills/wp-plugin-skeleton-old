@@ -1,6 +1,6 @@
 <?php
 /**
- * @version 1.2.0
+ * @version 2.0.0
  */
 
 namespace {{namespace}}\functions;
@@ -11,8 +11,9 @@ function value ( $value, $default = '' ) {
 }
 
 // returns a value of a global array if it exists or an empty string
-// example: request_value( 'PATH', 'server' ) returns $_SERVER['PATH']
-function request_value ( $key, $type = 'get' ) {
+// example: request_value( 'foo', 'post' ) returns $_POST['foo']
+function request_value ( $key, $type = '' ) {
+	if ( empty( $type ) ) $type = $_SERVER['REQUEST_METHOD'];
 	$array = $GLOBALS[ '_' . strtoupper( $type ) ];
 	return array_get( $array, $key, '' );
 }
