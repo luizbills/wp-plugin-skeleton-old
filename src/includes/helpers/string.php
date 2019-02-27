@@ -45,7 +45,7 @@ function str_slug ( $text, $separator = '-' ) {
 	// Replace any more than one $separator in a row
 	$slug = \preg_replace( "/\\$separator+/", $separator, $slug );
 	// Remove last $separator if at the end
-	$slug = \preg_replace( "/\\$separator\\$/", '', $slug );
+	$slug = \preg_replace( "/\\$separator\$/", '', $slug );
 	// Lowercase
 	$slug = \strtolower( $slug );
 
