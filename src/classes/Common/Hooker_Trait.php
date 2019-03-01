@@ -5,7 +5,7 @@
 
 namespace {{namespace}}\Common;
 
-abstract class Abstract_Hooker {
+trait Hooker_Trait {
 
 	protected function call_hook_function ( $hook_function, $hook, $callback, $priority, $arguments ) {
 		$hook_function( $hook, [ $this, $callback ], $priority, $arguments );

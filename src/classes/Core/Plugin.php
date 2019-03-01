@@ -6,9 +6,10 @@
 namespace {{namespace}}\Core;
 
 use {{namespace}}\functions as h;
-use {{namespace}}\Common\Abstract_Hooker;
+use {{namespace}}\Common\Hooker_Trait;
 
-final class Plugin extends Abstract_Hooker {
+final class Plugin {
+	use Hooker_Trait;
 
 	protected $actived = false;
 	protected static $instance = null;

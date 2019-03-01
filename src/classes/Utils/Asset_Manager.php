@@ -5,10 +5,11 @@
 
 namespace {{namespace}}\Utils;
 
-use {{namespace}}\Common\Abstract_Hooker;
+use {{namespace}}\Common\Hooker_Trait;
 use {{namespace}}\functions as h;
 
-class Asset_Manager extends Abstract_Hooker {
+class Asset_Manager {
+	use Hooker_Trait;
 
 	protected $global_dependencies = [];
 	protected $enqueued = [];

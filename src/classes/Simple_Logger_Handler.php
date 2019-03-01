@@ -6,8 +6,10 @@
 namespace {{namespace}};
 
 use {{namespace}}\functions as h;
+use {{namespace}}\Common\Hooker_Trait;
 
-class Simple_Logger_Handler extends Common\Abstract_Hooker {
+class Simple_Logger_Handler {
+	use Hooker_Trait;
 
 	public function add_hooks () {
 		$this->add_action( h\prefix( 'handle_log' ), 'handle_log', 10, 3 );

@@ -2,10 +2,12 @@
 
 namespace {{namespace}};
 
-use {{namespace}}\Common\Abstract_Hooker;
+use {{namespace}}\Common\Hooker_Trait;
 use {{namespace}}\functions as h;
 
-class Base extends Abstract_Hooker {
+class Base {
+	use Hooker_Trait;
+
 	public function add_hooks () {
 		$this->add_action( 'foo', 'bar' );
 	}
