@@ -6,8 +6,10 @@
 namespace {{namespace}};
 
 use {{namespace}}\functions as h;
+use {{namespace}}\Common\Hooker_Trait;
 
-class Plugin_Dependencies extends Common\Abstract_Hooker {
+class Plugin_Dependencies {
+	use Hooker_Trait;
 
 	protected $missing_dependencies = [];
 

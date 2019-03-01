@@ -122,7 +122,7 @@ $files = [
 		'Asset_Manager.php',
 	],
 	'classes/Common' => [
-		'Abstract_Hooker.php',
+		'Hooker_Trait.php',
 		'Abstract_Ajax_Action.php',
 	],
 	'includes' => [
