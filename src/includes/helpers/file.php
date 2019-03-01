@@ -1,7 +1,4 @@
 <?php
-/**
- * @version 1.0.3
- */
 
 namespace {{namespace}}\functions;
 

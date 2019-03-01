@@ -1,7 +1,4 @@
 <?php
-/**
- * @version 1.4.1
- */
 
 require_once 'helpers/array.php';
 require_once 'helpers/cache.php';

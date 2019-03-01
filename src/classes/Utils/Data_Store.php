@@ -1,7 +1,4 @@
 <?php
-/**
- * @version 2.0.0
- */
 
 namespace {{namespace}}\Utils;
 

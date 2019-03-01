@@ -4,8 +4,6 @@
  * use {{ var }} to safe/scaped values and {{ !var }} to non-scaped values.
  *
  * see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/templates/admin-notice.php
- * 
- * @version 2.3.0
  */
 
 namespace {{namespace}}\functions;

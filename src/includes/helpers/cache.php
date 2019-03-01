@@ -1,8 +1,6 @@
 <?php
 /**
  * Based on https://github.com/stevegrunwell/wp-cache-remember/tree/v1.1.1
- *
- * @version 1.1.0
  */
 
 namespace {{namespace}}\functions;
