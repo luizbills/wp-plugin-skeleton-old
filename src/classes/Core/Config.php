@@ -24,8 +24,8 @@ class Config {
 
 		$root = \dirname( $MAIN_FILE );
 		$plugin_config = Yaml::parseFile( $root . '/plugin.yml' );
-		$plugin_slug = h\slugify( $plugin_config['NAME'] );
-		$plugin_prefix = h\snake_slugify( $plugin_slug ) . '_';
+		$plugin_slug = h\str_slug( $plugin_config['NAME'] );
+		$plugin_prefix = h\str_slug( $plugin_config['NAME'], '_' ) . '_';
 		$options = self::get_options();
 
 		$options->set( 'SLUG', $plugin_slug );

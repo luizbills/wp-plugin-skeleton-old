@@ -88,7 +88,7 @@ class Asset_Manager extends Abstract_Hooker {
 				$script_data = $args['script_data'];
 
 				if ( ! empty( $script_data ) ) {
-					$script_data_name = h\snake_slugify( $args['handle'] ) . '_script_data';
+					$script_data_name = h\str_slug( $args['handle'], '_' ) . '_script_data';
 					$script_data_name = \apply_filters( h\prefix( 'script_data_js_var' ), $script_data_name, $args );
 
 					\wp_localize_script(
