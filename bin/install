@@ -212,7 +212,10 @@ if ( $is_test ) {
 
 // install dependencies via composer
 chdir( $target_dir );
-echo shell_exec( 'composer update' );
+if ( ! $is_test || ! is_dir( $target_dir . '/vendor' ) ) {
+	echo "Running composer..." . PHP_EOL;
+	echo shell_exec( 'composer update' );
+}
 
 // save the plugin folder name in a temporary file
 if ( ! $is_test ) {
