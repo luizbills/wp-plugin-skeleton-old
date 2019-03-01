@@ -8,7 +8,7 @@ ASSETS_DIR: 'assets'
 TEMPLATES_DIR: 'templates'
 TEXT_DOMAIN: '{{plugin_text_domain}}'
 
-BOILERPLATE_VERSION: '2.0.0' #delete this if you prefer
+BOILERPLATE_VERSION: '2.1.0' #delete this if you prefer
 
 # declare other values that you want
 
