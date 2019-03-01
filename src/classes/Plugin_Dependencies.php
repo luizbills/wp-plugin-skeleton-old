@@ -25,10 +25,6 @@ class Plugin_Dependencies extends Common\Abstract_Hooker {
 		$deps = [
 			// requires PHP 5.6+
 			'php' => $this->compare_php_version( '5.6' ),
-
-			// requires Classic Editor plugin
-			'classic_editor_plugin' => \class_exists( '\Classic_Editor' )
-				&& $this->compare_version( \Classic_Editor::plugin_version, '1.0.0' ),
 		];
 		$result = true;
 
@@ -64,10 +60,6 @@ class Plugin_Dependencies extends Common\Abstract_Hooker {
 		switch ( $dep ) {
 			case 'php':
 				$message = \__( 'Use PHP v5.6+', '{{plugin_text_domain}}' );
-			break;
-
-			case 'classic_editor_plugin':
-				$message = \__( 'Activate Classic Editor plugin', '{{plugin_text_domain}}' );
 			break;
 
 			default:
