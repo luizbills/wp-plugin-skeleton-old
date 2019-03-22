@@ -20,4 +20,12 @@ abstract class Abstract_Ajax_Action {
 	public function is_public () {
 		return false;
 	}
+	
+	protected function send_json ( $data, $code = 200 ) {
+		if ( $code >= 300 || $code < 200 ) {
+			\wp_send_json_error( $data, $code );
+		} else {
+			\wp_send_json_success( $data, $code );
+		}
+	}
 }
