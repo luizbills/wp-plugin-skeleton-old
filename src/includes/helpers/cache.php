@@ -13,7 +13,7 @@ function remember_cache ( $key, $callback, $expire = 0 ) {
 	
 	$key_suffix = \apply_filters( prefix( 'remember_cache_key_suffix' ), '_' . config_get( 'VERSION' ), $key );
 	
-	$transient_key .= $key_suffix;
+	$transient_key = $key . $key_suffix;
 	
 	$cached = \get_transient( $transient_key );
 	if ( false !== $cached ) {
