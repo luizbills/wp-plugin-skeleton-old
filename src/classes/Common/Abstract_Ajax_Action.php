@@ -34,7 +34,7 @@ abstract class Abstract_Ajax_Action {
 	}
 	
 	public function validate_nonce () {
-		check_ajax_referer( $this->get_nonce_action() );
+		check_ajax_referer( $this->get_nonce_action(), $this->get_nonce_query_arg() );
 	}
 	
 	public function validate_request () {
