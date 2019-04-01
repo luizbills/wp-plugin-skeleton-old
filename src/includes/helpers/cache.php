@@ -10,15 +10,20 @@ function remember_cache ( $key, $callback, $expire = 0 ) {
 		log_info( "function remember_cache disabled for $key" );
 		return $callback();
 	}
-
-	$cached = \get_transient( $key );
+	
+	$key_suffix = \apply_filters( prefix( 'remember_cache_key_suffix' ), '_' . config_get( 'VERSION' ), $key );
+	
+	$transient_key .= $key_suffix;
+	
+	$cached = \get_transient( $transient_key );
 	if ( false !== $cached ) {
 		return $cached;
 	}
 	$value = $callback();
 	if ( ! \is_wp_error( $value ) ) {
-		\set_transient( $key, $value, $expire );
+		\set_transient( $transient_key, $value, $expire );
 	}
+
 	return $value;
 }
 
