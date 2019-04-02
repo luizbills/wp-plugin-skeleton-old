@@ -2,57 +2,76 @@
 
 namespace {{namespace}}\functions;
 
+// You must to create your own log handler
+// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Simple_Logger_Handler.php
+
+// logger constanst
+config_set( 'LOGGER_LEVEL_0', 'DEBUG' );
+config_set( 'LOGGER_LEVEL_1', 'INFO' );
+config_set( 'LOGGER_LEVEL_2', 'NOTICE' );
+config_set( 'LOGGER_LEVEL_3', 'WARNING' );
+config_set( 'LOGGER_LEVEL_4', 'ERROR' );
+config_set( 'LOGGER_LEVEL_5', 'CRITICAL' );
+config_set( 'LOGGER_LEVEL_6', 'ALERT' );
+config_set( 'LOGGER_LEVEL_7', 'EMERGENCY' );
+
+// logger helpers
 function log_debug () {
-	_log( \func_get_args(), 'debug' );
+	_log( \func_get_args(), 0 );
 }
 
 function log_info () {
-	_log( \func_get_args(), 'info' );
+	_log( \func_get_args(), 1 );
+}
+
+function log_notice () {
+	_log( \func_get_args(), 2 );
 }
 
 function log_warn () {
-	_log( \func_get_args(), 'warning' );
+	_log( \func_get_args(), 3 );
 }
 
 function log_error () {
-	_log( \func_get_args(), 'error' );
+	_log( \func_get_args(), 4 );
 }
 
-/* Internal Helpers */
-
-// You can create your own log handler
-// see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Simple_Logger_Handler.php
-function _handle_log ( $message, $type, $timestamp ) {
-	\do_action( prefix( 'handle_log' ), $message, $type, $timestamp );
+function log_critical () {
+	_log( \func_get_args(), 5 );
 }
 
-function enable_logger () {
-	\add_filter( prefix( 'logger_enabled' ), '_return_true', 100 );
+function log_alert () {
+	_log( \func_get_args(), 6 );
 }
 
-function disable_logger () {
-	\add_filter( prefix( 'logger_enabled' ), '_return_false', 100 );
+function log_emergency () {
+	_log( \func_get_args(), 7 );
 }
 
-function _log ( $args, $type ) {
-	$is_enabled = \apply_filters( prefix( 'logger_enabled' ), true, $type );
-
-	$args = \is_array( $args ) ? $args : [ $args ];
-	$message = '';
-	foreach( $args as $arg ) {
-		if ( null === $arg ) {
-			$message .= 'Null';
+// Internal logger functions
+function _log ( $args, $level ) {
+	$is_enabled = \apply_filters( prefix( 'logger_enabled' ), \WP_DEBUG, $level );
+	if ( $is_enabled ) { 
+		$args = \is_array( $args ) ? $args : [ $args ];
+		$message = '';
+		foreach( $args as $arg ) {
+			if ( null === $arg ) {
+				$message .= 'Null';
+			}
+			elseif ($arg instanceof \DateTimeInterface) {
+				$message .= $arg->format(\DateTime::RFC3339);
+			}
+			elseif ( \is_bool( $arg ) ) {
+				$message .= $arg ? 'True' : 'False';
+			}
+			elseif ( ! \is_string( $arg ) ) {
+				$message .= print_r( $arg, true );
+			}
+			else {
+				$message .= $arg;
+			}
+			$message .= ' ';
 		}
-		elseif ( \is_bool( $arg ) ) {
-			$message .= $arg ? 'True' : 'False';
-		}
-		elseif ( ! \is_string( $arg ) ) {
-			$message .= print_r( $arg, true );
-		} else {
-			$message .= $arg;
-		}
-		$message .= ' ';
+		\do_action( prefix( 'handle_log' ), $message, $type, \time() );
 	}
-
-	_handle_log( $message, $type, \time() );
 }
