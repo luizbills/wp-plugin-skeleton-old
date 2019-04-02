@@ -11,16 +11,20 @@ function remember_cache ( $key, $callback, $expire = 0 ) {
 		return $callback();
 	}
 	
-	$key_suffix = \apply_filters( prefix( 'remember_cache_key_suffix' ), '_' . config_get( 'VERSION' ), $key );
+	$plugin_version = config_get( 'VERSION', '' );
+	// this suffix is used to automatically invalidate this plugin transients when the plugin is updated
+	$key_suffix = \apply_filters( prefix( 'remember_cache_key_suffix' ), $plugin_version ? "_$plugin_version" : '', $key );
+	// default expiration time is 0 (zero)
 	$expire = \apply_filters( prefix( 'remember_cache_expiration' ), $expire, $key );
-	
 	$transient_key = $key . $key_suffix;
-	
 	$cached = \get_transient( $transient_key );
+
 	if ( false !== $cached ) {
 		return $cached;
 	}
+
 	$value = $callback();
+
 	if ( ! \is_wp_error( $value ) ) {
 		\set_transient( $transient_key, $value, $expire );
 	}
