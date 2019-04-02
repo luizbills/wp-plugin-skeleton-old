@@ -21,7 +21,7 @@ $prompts = [
 if ( $is_test ) {
 	$ready = true;
 	$values = [
-		'Plugin Name' => 'Skeleton Dev Plugin',
+		'Plugin Name' => '_Skeleton Dev Plugin',
 		'Plugin Description' => 'Use this plugin to test the wp-plugin-skeleton boilerplate',
 		'Plugin Author' => 'An Awesome Contribuitor',
 		'Plugin Author URL' => 'https://github.com/luizbills/wp-plugin-skeleton',
@@ -152,7 +152,7 @@ $files = [
 ];
 
 // create all files and folders
-$folder_name = slugify( $values['Plugin Name'] );
+$folder_name = '_' . slugify( $values['Plugin Name'] );
 $root = dirname( __DIR__ );
 $target_dir = dirname( $root ) . "/$folder_name";
 
@@ -236,6 +236,7 @@ function slugify ( $text ) {
 	$sanitized_text = preg_replace( '/[^A-Za-z0-9- ]/', '', $sanitized_text ); // Remove all non-alphanumeric except .
 	$sanitized_text = preg_replace( '/-+/', '-', $sanitized_text ); // Replace any more than one - in a row
 	$sanitized_text = preg_replace( '/-$/', '', $sanitized_text ); // Remove last - if at the end
+	$sanitized_text = preg_replace( '/^-/', '', $sanitized_text ); // Remove first - if at the begin
 	$sanitized_text = strtolower( $sanitized_text ); // Lowercase
 
 	return $sanitized_text;
