@@ -5,15 +5,17 @@ namespace {{namespace}}\functions;
 // You must to create your own log handler
 // see: https://github.com/luizbills/wp-plugin-skeleton/blob/master/src/classes/Simple_Logger_Handler.php
 
-// logger constanst
-config_set( 'LOGGER_LEVEL_0', 'DEBUG' );
-config_set( 'LOGGER_LEVEL_1', 'INFO' );
-config_set( 'LOGGER_LEVEL_2', 'NOTICE' );
-config_set( 'LOGGER_LEVEL_3', 'WARNING' );
-config_set( 'LOGGER_LEVEL_4', 'ERROR' );
-config_set( 'LOGGER_LEVEL_5', 'CRITICAL' );
-config_set( 'LOGGER_LEVEL_6', 'ALERT' );
-config_set( 'LOGGER_LEVEL_7', 'EMERGENCY' );
+// logger constants
+\add_action( 'plugins_loaded', function () {
+	config_set( 'LOGGER_LEVEL_0', 'DEBUG' );
+	config_set( 'LOGGER_LEVEL_1', 'INFO' );
+	config_set( 'LOGGER_LEVEL_2', 'NOTICE' );
+	config_set( 'LOGGER_LEVEL_3', 'WARNING' );
+	config_set( 'LOGGER_LEVEL_4', 'ERROR' );
+	config_set( 'LOGGER_LEVEL_5', 'CRITICAL' );
+	config_set( 'LOGGER_LEVEL_6', 'ALERT' );
+	config_set( 'LOGGER_LEVEL_7', 'EMERGENCY' );
+} );
 
 // logger helpers
 function log_debug () {
