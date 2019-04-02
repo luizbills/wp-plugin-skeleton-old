@@ -72,6 +72,6 @@ function _log ( $args, $level ) {
 			}
 			$message .= ' ';
 		}
-		\do_action( prefix( 'handle_log' ), $message, $type, \time() );
+		\do_action( prefix( 'handle_log' ), $message, $level, \time() );
 	}
 }
