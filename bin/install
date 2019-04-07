@@ -152,7 +152,8 @@ $files = [
 ];
 
 // create all files and folders
-$folder_name = '_' . slugify( $values['Plugin Name'] );
+$folder_name = slugify( $values['Plugin Name'] );
+$folder_name = $is_test ? "_$folder_name" : $folder_name;
 $root = dirname( __DIR__ );
 $target_dir = dirname( $root ) . "/$folder_name";
 
