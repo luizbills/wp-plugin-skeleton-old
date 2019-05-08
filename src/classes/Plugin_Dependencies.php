@@ -23,7 +23,7 @@ class Plugin_Dependencies {
 	public function check_dependencies ( $result ) {
 		$deps = [
 			// requires PHP 5.6+
-			'php' => $this->compare_php_version( '5.6' ),
+			'php' => $this->compare_version( \PHP_VERSION, '5.6' ),
 		];
 		$result = true;
 
@@ -71,9 +71,4 @@ class Plugin_Dependencies {
 	protected function compare_version ( $version1, $version2, $operator = '>=' ) {
 		return version_compare( strtolower( $version1 ), strtolower( $version2 ), $operator );
 	}
-
-	protected function compare_php_version ( $min_version ) {
-		return $this->compare_version( PHP_VERSION, $min_version, '>=' );
-	}
-
 }
