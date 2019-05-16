@@ -17,6 +17,12 @@ function request_value ( $key, $type = '' ) {
 
 function throw_if ( $condition, $exception, ...$parameters ) {
 	if ( $condition ) {
+		if ( empty( $exception ) ) {
+			$exception = \apply_filters( prefix( 'default_exception' ), \Exception::class, $parameters );
+		}
+		if ( ! empty( $parameters ) ) {
+			$parameters = \apply_filters( prefix( 'exception_parameters' ), $parameters, $exception );
+		}
 		throw is_string( $exception ) ? new $exception( ...$parameters ) : $exception;
 	}
 	return $condition;
