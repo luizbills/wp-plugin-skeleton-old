@@ -41,6 +41,17 @@ function array_only ( $arr, $keys ) {
 	return \array_intersect_key( $arr, \array_flip( (array) $keys ) );
 }
 
+function array_group_by_prefix ( $arr, $prefix ) {
+	$group = [];
+	foreach ( $arr as $key => $value ) {
+		if ( str_starts_with( $key, $prefix ) ) {
+			$new_key = substr( $key, strlen( $prefix ) );
+			$group[ $new_key ] = $value;
+		}
+	}
+	return $group;
+}
+
 function wrap ( $value ) {
 	return \is_array( $value ) ? $value : [ $value ];
 }
