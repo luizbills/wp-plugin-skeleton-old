@@ -27,3 +27,16 @@ function throw_if ( $condition, $exception, ...$parameters ) {
 	}
 	return $condition;
 }
+
+function maybe_define ( $key, $value = true ) {
+	if ( ! defined( $key ) ) {
+		define( $key, $value );
+	}
+}
+
+function get_constant ( $key, $default = '' ) {
+	if ( defined( $key ) ) {
+		return constant( $key );
+	}
+	return $default;
+}
