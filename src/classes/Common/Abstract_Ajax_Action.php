@@ -79,7 +79,7 @@ abstract class Abstract_Ajax_Action {
 		$this->send_json( null, $error_message, $status_code );
 	}
 
-	protected function send_json_sucess ( $data, $status_code = 200 ) {
+	protected function send_json_success ( $data, $status_code = 200 ) {
 		$this->send_json( $data, null, $status_code );
 	}
 
