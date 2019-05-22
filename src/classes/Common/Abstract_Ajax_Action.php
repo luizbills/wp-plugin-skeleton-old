@@ -16,57 +16,71 @@ abstract class Abstract_Ajax_Action {
 
 	public function handle_request () {
 		$method = $_SERVER['REQUEST_METHOD'];
-		$callback = "handle_$method";
-		if ( method_exists( $this,  $callback ) ) {
+		$callback = \strtolower( "handle_$method" );
+		if ( \method_exists( $this,  $callback ) ) {
 			$this->validate_nonce();
 			$this->$callback();
 		} else {
-			$this->send_invalid_request_response();
+			$this->send_default_response();
 		}
 	}
-	
+
 	public function is_public () {
 		return false;
 	}
 
 	public function handle_get () {
-		$this->send_invalid_request_response();
+		$this->send_default_response();
 	}
-	
+
 	public function handle_post () {
-		$this->send_invalid_request_response();
+		$this->send_default_response();
 	}
-	
+
 	public function handle_put () {
-		$this->send_invalid_request_response();
+		$this->send_default_response();
 	}
-	
-	public function handle_patch () {
-		$this->send_invalid_request_response();
-	}
-	
+
 	public function handle_delete () {
-		$this->send_invalid_request_response();
+		$this->send_default_response();
 	}
-	
-	public function send_invalid_request_response () {
-		$this->send_json(
-			null,
-			__( 'Inválid request method.', '{{plugin_text_domain}}' ),
-			405
-		);
+
+	public function handle_patch () {
+		$this->send_default_response();
 	}
-	
+
 	public function get_nonce_action () {
 		return 'ajax_nonce_' . $this->get_action_name();
 	}
-	
+
 	public function get_nonce_query_arg () {
 		return '_ajax_nonce';
 	}
-	
+
 	protected function validate_nonce () {
-		\check_ajax_referer( $this->get_nonce_action(), $this->get_nonce_query_arg() );
+		$nonce_action = $this->get_nonce_action();
+		$query_arg = $this->get_nonce_query_arg();
+		if ( ! \check_ajax_referer( $nonce_action, $query_arg, false ) ) {
+			$this->send_json_error(
+				__( 'Invalid nonce.', '{{plugin_text_domain}}' ),
+				403
+			);
+		}
+	}
+
+	protected function send_default_response () {
+		$this->send_json_error(
+			__( 'Invalid request method.', '{{plugin_text_domain}}' ),
+			405
+		);
+	}
+
+	protected function send_json_error ( $error_message, $status_code = 400 ) {
+		$this->send_json( null, $error_message, $status_code );
+	}
+
+	protected function send_json_sucess ( $data, $status_code = 200 ) {
+		$this->send_json( $data, null, $status_code );
 	}
 
 	protected function send_json ( $data, $error_message = '', $status_code = null ) {
