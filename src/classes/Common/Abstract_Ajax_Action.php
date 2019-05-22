@@ -4,6 +4,8 @@ namespace {{namespace}}\Common;
 
 abstract class Abstract_Ajax_Action {
 	use Hooker_Trait;
+	
+	abstract public function get_action_name ();
 
 	public function add_hooks () {
 		$this->add_action( 'wp_ajax_' . $this->get_action_name(), 'validate_request' );
@@ -13,12 +15,50 @@ abstract class Abstract_Ajax_Action {
 		}
 	}
 
-	abstract public function get_action_name ();
+	public function validate_request () {
+		$this->validate_nonce();
 
-	abstract public function callback ();
+		$method = $_SERVER['REQUEST_METHOD'];
+		$callback = "handle_$method";
+
+		if ( method_exists( $this,  $callback ) ) {
+			$this->validate_nonce();
+			$this->$callback();
+		} else {
+			$this->send_invalid_request_response();
+		}
+	}
 	
-	public function get_accepted_methods () {
-		return [ 'GET', 'POST' ];
+	public function is_public () {
+		return false;
+	}
+
+	public function handle_get () {
+		$this->send_invalid_request_response();
+	}
+	
+	public function handle_post () {
+		$this->send_invalid_request_response();
+	}
+	
+	public function handle_put () {
+		$this->send_invalid_request_response();
+	}
+	
+	public function handle_patch () {
+		$this->send_invalid_request_response();
+	}
+	
+	public function handle_delete () {
+		$this->send_invalid_request_response();
+	}
+	
+	public function send_invalid_request_response () {
+		$this->send_json(
+			null,
+			__( 'Inválid request method.', '{{plugin_text_domain}}' ),
+			405
+		);
 	}
 	
 	public function get_nonce_action () {
@@ -26,32 +66,29 @@ abstract class Abstract_Ajax_Action {
 	}
 	
 	public function get_nonce_query_arg () {
-		return null; // default is _ajax_nonce or _wpnonce
+		return '_ajax_nonce';
+	}
+	
+	protected function validate_nonce () {
+		\check_ajax_referer( $this->get_nonce_action(), $this->get_nonce_query_arg() );
 	}
 
-	public function is_public () {
-		return false;
-	}
-	
-	public function validate_nonce () {
-		check_ajax_referer( $this->get_nonce_action(), $this->get_nonce_query_arg() );
-	}
-	
-	public function validate_request () {
-		$this->validate_nonce();
-		
-		if ( ! in_array( $_SERVER['REQUEST_METHOD'], $this->get_accepted_methods() ) ) {
-			$this->send_json( [], 405 );
-		}
-		
-		$this->callback();
-	}
-	
-	protected function send_json ( $data, $code = 200 ) {
-		if ( $code >= 300 || $code < 200 ) {
-			\wp_send_json_error( $data, $code );
+	protected function send_json ( $data, $error_message = '', $status_code = null ) {
+		$response = [];
+
+		if ( empty( $error_message ) ) {
+			$status_code = $status_code ? $status_code : 200;
 		} else {
-			\wp_send_json_success( $data, $code );
+			$status_code = $status_code ? $status_code : 400;
+			$response['error_message'] = $error_message;
 		}
+
+		$response['success'] = $status_code >= 200 && $status_code < 300;
+		$response['data'] = $data;
+		$response['meta'] = [
+			'status_code' => $status_code
+		];
+
+		\wp_send_json( $response, $status_code );
 	}
 }
