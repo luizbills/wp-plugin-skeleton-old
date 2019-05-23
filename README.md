@@ -11,7 +11,7 @@
 Execute this script below in your `wp-content/plugins` to generate a new plugin boilerplate:
 
 ```bash
-git clone https://github.com/luizbills/wp-plugin-skeleton.git _skeleton \
+git clone https://github.com/luizbills/wp-plugin-skeleton-old.git _skeleton \
 && cd $_ \
 && php bin/install && sleep .1 \
 && cd ../$(cat ../.tmp_wp_plugin_dir) \
